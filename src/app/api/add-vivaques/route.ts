@@ -4,7 +4,7 @@ import { authOptions } from "../auth/[...nextauth]/options";
 import mongoose from "mongoose";
 import VivaqModel from "@/model/Vivaq.model";
 
-async function POST(request:Request) {
+export async function POST(request:Request) {
     await dbConnect();
     const {name,content,subjectId} = await request.json();
 
@@ -12,7 +12,7 @@ async function POST(request:Request) {
         const newVivaq =new VivaqModel({
             name,
             content,
-            subject:subjectId
+            subjectId
         })
         await newVivaq.save();
 

@@ -3,6 +3,7 @@ import mongoose,{Schema,Document, trusted} from "mongoose";
 export interface Note extends Document{
     name:string,
     content:string,
+    subjectId:mongoose.Schema.Types.ObjectId,
     createdAt:Date
 
 }
@@ -14,6 +15,11 @@ export const NoteSchema : Schema<Note> = new Schema({
     },
     content:{
         type:String,
+        required:true
+    },
+    subjectId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Subject",
         required:true
     },
     createdAt:{

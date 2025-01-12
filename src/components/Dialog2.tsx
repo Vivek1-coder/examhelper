@@ -10,6 +10,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import React, { useState } from 'react'
+import { Textarea } from "@/components/ui/textarea"
+
 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -24,11 +26,12 @@ import { useRouter } from "next/navigation"
 
 
 
-const DialogComponentV = () => {
+const DialogComponentV = ({ subjectId }: { subjectId: string }) => {
 
-    const [name,setName] = useState('')
-    const [isPublic,setIsPublic] = useState(true)
+    const [ques,setQues] = useState('')
+    const [ans,setAns] = useState('')
     const {data:session} = useSession()
+    
     const  {toast} = useToast()
     const router = useRouter()
     const [isCreating,setIsCreating] = useState(false)
@@ -36,9 +39,9 @@ const DialogComponentV = () => {
     const handleSubmit = async()=>{
       setIsCreating(true);
         try {
-          
-            const response = await axios.post<ApiResponse>('/api/add-subject',{
-                name,isPublic
+
+            const response = await axios.post<ApiResponse>('/api/add-vivaques',{
+                name:ques,content:ans,subjectId
             })
 
             toast({
@@ -69,15 +72,7 @@ const DialogComponentV = () => {
         }
     }
 
-    const handleSwitchChange = async()=>{
-        try {
-           setIsPublic(!isPublic)
-        } catch (error) {
-          const axiosError = error as AxiosError<ApiResponse>;
-          console.log(axiosError)
-          
-        }
-      }
+    
 
       return (
         <div className="m-2">
@@ -94,30 +89,28 @@ const DialogComponentV = () => {
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Name
+                <Label htmlFor="ques" className="text-right">
+                  Question
                 </Label>
-                <Input id="name" value={name} 
+                <Textarea id="ques" value={ques} 
                 onChange={(e) => {
-                    setName(e.target.value);
+                    setQues(e.target.value);
                 }}
                   className="col-span-3" />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="isPublic" className="text-right">
-                {isPublic ? 'Public' : 'Private'}
+                <Label htmlFor="ans" className="text-right">
+                  Answer
                 </Label>
-                <div className="mb-4">
-              <Switch
-               
-                checked={isPublic}
-                onCheckedChange={handleSwitchChange}
-                
-              />
-            </div>
+                <Textarea id="ans" value={ans} 
+                onChange={(e) => {
+                    setAns(e.target.value);
+                }}
+                  className="col-span-3" />
+              </div>
                 
               </div>
-            </div>
+           
             <DialogFooter>
               <Button type="submit" onClick={handleSubmit}>{isCreating?'Adding...':'Add'}</Button>
             </DialogFooter>

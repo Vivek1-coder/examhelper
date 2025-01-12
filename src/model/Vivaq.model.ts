@@ -1,19 +1,24 @@
 import mongoose,{Schema,Document} from "mongoose";  
 
 export interface Vivaq extends Document{
-    name:string,
-    content:string,
+    ques:string,
+    ans:string,
+    subjectId:mongoose.Schema.Types.ObjectId,
     createdAt:Date
 
 }
 
 export const VivaqSchema : Schema<Vivaq> = new Schema({
-    name:{
+    ques:{
         type:String,
         required:true
     },
-    content:{
-        type:String,
+    ans:{
+        type:String
+    },
+    subjectId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Subject",
         required:true
     },
     createdAt:{

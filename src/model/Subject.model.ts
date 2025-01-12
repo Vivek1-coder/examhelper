@@ -6,12 +6,8 @@ import { Vivaq, VivaqSchema } from "./Vivaq.model";
 
 export interface Subject extends Document{
     name:string,
-    notes: Note[],
-    pyqs: PYQ[],
     author:mongoose.Schema.Types.ObjectId,
     authorName:string,
-    playlists: Video[],
-    vivaques: Vivaq[],
     isPublic: boolean,
     createdAt:Date
 
@@ -32,10 +28,6 @@ export const SubjectSchema : Schema<Subject> = new Schema({
         require:true,
         default:"Mr Unknown"
     },
-    notes:[NoteSchema],
-    pyqs:[PYQSchema],
-    playlists:[VideoSchema],
-    vivaques:[VivaqSchema],
     isPublic:{
         type:Boolean,
         default:true,
