@@ -1,0 +1,93 @@
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  transition: color 0.1s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px; /* Adjust the distance from the text */
+  left: 0%;
+  transform: translateX(-80%) scaleX(0);
+  transform-origin: center;
+  width: 110%;
+  height: 3px; /* Thickness of the line */
+  background-color: rgb(221, 221, 41); /* Line color */
+  transition: transform 0.1s ease;
+  border-radius: 8px;
+}
+
+.nav-link:hover::after,
+.nav-link:active::after {
+  transform: none; /* Remove underline on hover and click */
+}
+
+.menu {
+  display: flex;
+  gap: 20px;
+}
+
+.menu.active {
+  position: absolute;
+  top: 54px;
+  left: 0;
+  right: 0;
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px;
+}
+
+.hamburger {
+  display: none; /* Initially hidden for larger screens */
+  flex-direction: column;
+  gap: 5px;
+  width: 30px;
+  height: 25px; /* Adjust as needed for visibility */
+  cursor: pointer;
+  z-index: 10; /* Ensures it appears above other elements */
+}
+
+.hamburger span {
+  display: block;
+  width: 100%; /* Full width of the hamburger container */
+  height: 3px; /* Thickness of each line */
+  background-color: white; /* Visible color */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+    background-color: black;
+  
+    z-index: 10000;
+  }
+  .header {
+    background-color: black;
+  }
+
+  .menu.active {
+    display: flex;
+  }
+
+  .hamburger {
+
+    display: flex;
+  }
+  
+
+  
+}

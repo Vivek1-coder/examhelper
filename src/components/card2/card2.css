@@ -1,0 +1,35 @@
+.nav-link {
+    position: relative;
+    text-decoration: none;
+    transition: color 0.1s ease;
+  }
+  
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -5px; /* Adjust the distance from the text */
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    width: 95%;
+    height: 3px; /* Thickness of the line */
+    background-color: rgb(221, 221, 41); /* Line color */
+    transition: transform 0.1s ease;
+    border-radius : 8px;
+  }
+  
+  .nav-link:hover::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+
+  .card {
+    box-shadow: 0 4px 6px rgba(151, 147, 147, 0.436);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+  }
+  
+  .card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 16px 16px rgba(186, 177, 177, 0.767);
+  }
+  
