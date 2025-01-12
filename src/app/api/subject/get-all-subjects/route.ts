@@ -4,32 +4,17 @@ import SubjectModel from "@/model/Subject.model";
 import { getServerSession, User } from "next-auth";
 import mongoose from "mongoose";
 import dbConnect from "@/lib/dbConnect";
-import { authOptions } from "../auth/[...nextauth]/options";
+import { authOptions } from "../../auth/[...nextauth]/options";
 
 export async function GET(request:Request) {
     await dbConnect()
 
-    const session = await getServerSession(authOptions)
-    const user:User = session?.user as User
-
-    if(!session || !session.user){
-        return Response.json(
-            {
-                success : false,
-                message:"Not Authentication"
-            },
-            { status : 401 }
-        )
-    }
-
-    const userId = new mongoose.Types.ObjectId(user._id);
-
     try {
         const subjects = await SubjectModel.aggregate([
-            {$match : {author:userId}},
+            {$match : {isPublic:true}},
             {$sort:{'name':-1}}
         ])
-
+        
         if(!subjects || subjects.length == 0){
             return Response.json(
                 {

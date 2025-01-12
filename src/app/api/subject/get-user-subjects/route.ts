@@ -1,15 +1,14 @@
 
 
-import SubjectModel from "@/model/Vivaq.model";
+import SubjectModel from "@/model/Subject.model";
 import { getServerSession, User } from "next-auth";
 import mongoose from "mongoose";
 import dbConnect from "@/lib/dbConnect";
-import { authOptions } from "../auth/[...nextauth]/options";
-import VivaqModel from "@/model/Vivaq.model";
+import { authOptions } from "../../auth/[...nextauth]/options";
 
 export async function GET(request:Request) {
     await dbConnect()
-    const subjectId = request.json()
+
     const session = await getServerSession(authOptions)
     const user:User = session?.user as User
 
@@ -26,15 +25,16 @@ export async function GET(request:Request) {
     const userId = new mongoose.Types.ObjectId(user._id);
 
     try {
-        const ques = await VivaqModel.aggregate([
-            {$match : {subject:subjectId}},
+        const subjects = await SubjectModel.aggregate([
+            {$match : {author:userId}},
+            {$sort:{'name':-1}}
         ])
 
-        if(!ques || ques.length == 0){
+        if(!subjects || subjects.length == 0){
             return Response.json(
                 {
                     success:false,
-                    message:"Questions not found"
+                    message:"Subjects not found"
                 }
             )
         }
@@ -42,8 +42,8 @@ export async function GET(request:Request) {
         return Response.json(
             {
                 success:true,
-                message:"User questions found",
-                ques:ques
+                message:"User message found",
+                subjects:subjects
             },
             {status:200}
         )

@@ -37,7 +37,7 @@ const DialogComponent = () => {
       setIsCreating(true);
         try {
           
-            const response = await axios.post<ApiResponse>('/api/add-subject',{
+            const response = await axios.post<ApiResponse>('/api/subject/add-subject',{
                 name,isPublic
             })
 

@@ -12,6 +12,8 @@ import { Vivaq } from '@/model/Vivaq.model';
 import { useToast } from '@/hooks/use-toast';
 import axios, { AxiosError } from 'axios';
 import { ApiResponse } from '@/types/ApiResponse';
+import Navbar from '@/components/Navbar/Navbar';
+import NavbarQues from '@/components/Navbar/Navbar';
 
 
 const page = () => {
@@ -24,7 +26,7 @@ const page = () => {
     const fetchUserQuestions = useCallback(
       async (refresh: boolean = false) => {
         try {
-          const response = await axios.get<ApiResponse>("/api/get-vivaques");
+          const response = await axios.get<ApiResponse>(`/api/vivaques/get-vivaques?subjectId=${subjectId}`);
           setQues(response.data.ques || []);
           if (refresh) {
             toast({
@@ -51,25 +53,34 @@ const page = () => {
       fetchUserQuestions();
     },[fetchUserQuestions])
   return (
+
     <div>
+      <div className="absolute top-0 w-full">
+        <NavbarQues/>
+      </div>
+      <div className='absolute top-20 left-3'>
       <DialogComponentV subjectId={subjectId as string}/>
+      </div>
       
+      <div className='w-full h-full flex justify-center items-center p-10'>
+        <div className=' w-1/2 h-1/2 flex flex-col items-center rounded-3xl p-10 overflow-y-auto'>
       {
         ques.length > 0 ? 
         ques.map((q)=>(
-          <div key={q._id as string} className='text-black'>
+          <div key={q._id as string} className='text-black w-full'>
             <Accordion type="single" collapsible>
           <AccordionItem value="item-1">
             <AccordionTrigger>{q.ques}</AccordionTrigger>
             <AccordionContent>
-              {q.ans}
+              <input type="text" value={q.ans} readOnly />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
           </div>
-        )) : <p>No notes found</p>
+        )) : <p>No ques found {ques.length}</p>
       }
-        
+        </div>
+        </div>
 
       
     </div>

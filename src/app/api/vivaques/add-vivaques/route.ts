@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect"
 import { getServerSession, User } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/options";
+import { authOptions } from "../../auth/[...nextauth]/options";
 import mongoose from "mongoose";
 import VivaqModel from "@/model/Vivaq.model";
 
@@ -10,8 +10,8 @@ export async function POST(request:Request) {
 
     try{
         const newVivaq =new VivaqModel({
-            name,
-            content,
+            ques:name,
+            ans:content,
             subjectId
         })
         await newVivaq.save();

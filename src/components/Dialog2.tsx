@@ -40,7 +40,7 @@ const DialogComponentV = ({ subjectId }: { subjectId: string }) => {
       setIsCreating(true);
         try {
 
-            const response = await axios.post<ApiResponse>('/api/add-vivaques',{
+            const response = await axios.post<ApiResponse>('/api/vivaques/add-vivaques',{
                 name:ques,content:ans,subjectId
             })
 

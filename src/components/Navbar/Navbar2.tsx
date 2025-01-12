@@ -3,23 +3,8 @@ import Link from 'next/link';
 import './Navbar.css';
 import { useState, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import {
-  Breadcrumb,
-  BreadcrumbEllipsis,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
-const NavbarQues = () => {
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
@@ -52,21 +37,40 @@ const NavbarQues = () => {
         <span></span>
         <span></span>
       </button>
-      <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/dashboard/subject">Subjects</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Imp. Ques</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-      </Breadcrumb>
+      <nav className={`menu ${isMenuOpen ? 'active' : ''}`}>
+        <Link
+          href="/dashboard/subject"
+          className={`${
+            isSmallScreen ? '' : 'nav-link'
+          } text-white md:text-black hover:text-yellow-400 text-center`}
+        >
+          Subjects
+        </Link>
+        <Link
+          href="#"
+          className={`${
+            isSmallScreen ? '' : 'nav-link'
+          } text-white md:text-black hover:text-yellow-400 text-center`}
+        >
+          Followers
+        </Link>
+        <Link
+          href="#"
+          className={`${
+            isSmallScreen ? '' : 'nav-link'
+          } text-white md:text-black hover:text-yellow-400 text-center`}
+        >
+          Notifications
+        </Link>
+        <Link
+          href="#"
+          className={`${
+            isSmallScreen ? '' : 'nav-link'
+          } text-white md:text-black hover:text-yellow-400 text-center`}
+        >
+          Groups
+        </Link>
+      </nav>
       
       <Link href="/profile">
       <Avatar>
@@ -81,4 +85,4 @@ const NavbarQues = () => {
   );
 };
 
-export default NavbarQues;
+export default Navbar;

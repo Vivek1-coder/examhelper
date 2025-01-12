@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Subject } from "@/model/Subject.model";
 import { useRouter } from "next/navigation";
 import { Cardcomponent } from "@/components/card2/Card2";
-import Navbar from "@/components/Navbar/Navbar";
+import Navbar from "@/components/Navbar/Navbar2";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
@@ -30,7 +30,7 @@ const Subjectpage = () => {
   const fetchAllSubjects = useCallback(
     async(refresh:boolean = false)=>{
       try {
-        const response = await axios.get<ApiResponse>("/api/get-all-subjects");
+        const response = await axios.get<ApiResponse>("/api/subject/get-all-subjects");
         setAllSubjects(response.data.subjects || [])
 
         if (refresh) {
@@ -59,7 +59,7 @@ const Subjectpage = () => {
   const fetchUserSubjects = useCallback(
     async (refresh: boolean = false) => {
       try {
-        const response = await axios.get<ApiResponse>("/api/get-user-subjects");
+        const response = await axios.get<ApiResponse>("/api/subject/get-user-subjects");
         setSubjects(response.data.subjects || []);
         if (refresh) {
           toast({
