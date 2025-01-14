@@ -1,11 +1,12 @@
-import Navbar from '@/components/Navbar/Navbar'
+import NavbarQues from '@/components/Navbar/Navbar'
+import Navbar from '@/components/Navbar/Navbar2'
 import React from 'react'
 // import { NavbarComponent } from '@/components/Navbar'
 
 const Dashboard = () => {
   return (
     <div className='relative'>
-      <div className="absolute top-0 w-full">
+      <div className="absolute top-0 w-full ">
         <Navbar/>
         </div>
       

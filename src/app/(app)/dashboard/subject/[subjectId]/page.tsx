@@ -47,7 +47,7 @@ const page = () => {
         />
         <Card
         subjectId={subjectId as string}
-          title='playlists'
+          title='playlist'
           subjectName="Playlist"
           likes={0}
           author="Self"

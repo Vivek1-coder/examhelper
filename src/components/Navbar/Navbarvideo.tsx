@@ -21,7 +21,7 @@ import {
 
 
 
-const NavbarQues = () => {
+const Navbarvideo = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
@@ -65,7 +65,7 @@ const NavbarQues = () => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>Imp. Ques</BreadcrumbPage>
+                <BreadcrumbPage>Playing video</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
       </Breadcrumb>
@@ -83,4 +83,4 @@ const NavbarQues = () => {
   );
 };
 
-export default NavbarQues;
+export default Navbarvideo;

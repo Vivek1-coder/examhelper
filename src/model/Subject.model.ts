@@ -1,8 +1,5 @@
 import mongoose,{Schema,Document} from "mongoose";  
-import { Note,NoteSchema } from "./Note.model";    
-import { PYQ, PYQSchema } from "./PYQ.model";
-import { Video, VideoSchema } from "./Video.model";
-import { Vivaq, VivaqSchema } from "./Vivaq.model";
+
 
 export interface Subject extends Document{
     name:string,

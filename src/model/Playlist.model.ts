@@ -1,30 +1,21 @@
 import mongoose,{Schema,Document} from "mongoose";  
 
-export interface Video extends Document{
+export interface Playlist extends Document{
+    name:string,
     thumbnail:string,
-    title:string,
-    videoId:string,
-    author:string,
     playlistId:string,
+    totalVideos:number,
     subjectId:mongoose.Schema.Types.ObjectId,
     createdAt:Date
 
 }
 
-export const VideoSchema : Schema<Video> = new Schema({
+export const PlaylistSchema : Schema<Playlist> = new Schema({
+    name:{
+        type:String,
+        required:true
+    },
     thumbnail:{
-        type:String,
-        required:true
-    },
-    title:{
-        type:String,
-        required:true
-    },
-    videoId:{
-        type:String,
-        required:true
-    },
-    author:{
         type:String,
         required:true
     },
@@ -32,9 +23,13 @@ export const VideoSchema : Schema<Video> = new Schema({
         type:String,
         required:true
     },
+    totalVideos:{
+        type:Number,
+        required:true
+    },
     subjectId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Subject",
+        ref:"Playlist",
         required:true
     },
     createdAt:{
@@ -44,6 +39,6 @@ export const VideoSchema : Schema<Video> = new Schema({
     }
 })
 
-const VideoModel = (mongoose.models.Video as mongoose.Model<Video>) || (mongoose.model<Video>("Video",VideoSchema))
+const PlaylistModel = (mongoose.models.Playlist as mongoose.Model<Playlist>) || (mongoose.model<Playlist>("Playlist",PlaylistSchema))
 
-export default VideoModel;
+export default PlaylistModel;

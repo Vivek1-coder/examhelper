@@ -1,0 +1,142 @@
+'use client'
+
+import { useCallback, useEffect, useState } from 'react';
+import axios, { AxiosError } from 'axios';
+import AddPlaylist from '@/components/AddPlaylist';
+import { useParams } from 'next/navigation';
+import { Playlist } from '@/model/Playlist.model';
+import { ApiResponse } from '@/types/ApiResponse';
+import { useToast } from '@/hooks/use-toast';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import Link from 'next/link';
+import { PlaylistCard } from '@/components/card2/PlaylistCard';
+import NavbarQues from '@/components/Navbar/Navbar';
+
+
+const PlaylistPage = () => {
+  
+  const [playlistData, setPlaylistData] = useState<Playlist[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const {toast} = useToast();
+  const params = useParams();
+  const subjectId = params?.subjectId;
+
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPlaylistLink(e.target.value);
+  //   setError(null); // Clear any previous errors
+  // };
+
+  const fetchAllPlaylists = useCallback(
+    async(refresh:boolean = false)=>{
+      try {
+        const response = await axios.get<
+        ApiResponse>(`/api/playlist/get-playlist?subjectId=${subjectId}`);
+        setPlaylistData(response.data.playlists || [])
+
+        if(refresh){
+          toast({
+            title:"Refreshed playlist",
+            description:"Showing refreshed playlists"
+          });
+        }
+      } catch (error) {
+        const axiosError = error as AxiosError<ApiResponse>
+        toast({
+          title:"Error",
+          description:
+          axiosError.response?.data.message || "Failed to fetch playlist",
+        variant: "destructive",
+        })
+      }
+    },[toast]
+  )
+
+
+  useEffect(()=>{
+    fetchAllPlaylists();
+  },[fetchAllPlaylists,toast])
+
+  
+
+  return (
+    
+    <div className='relative w-screen h-screen'>
+      <div>
+       <NavbarQues/>
+      </div>
+      <div className='absolute top-24 right-11'>
+      <AddPlaylist subjectId={`${subjectId}`} />
+      </div>
+      <div className='flex flex-wrap justify-center p-10 mx-5 h-5/6 overflow-y-auto gap-6'>
+
+      {
+        playlistData.map((playlists)=>(
+          <div key={playlists._id as string}>
+            <Link href={`playlist/${playlists.playlistId}`}>
+              <PlaylistCard 
+              thumbnail={`${playlists.thumbnail}`} 
+              title={playlists.name}
+              nvideos={playlists.totalVideos}
+              />
+            </Link>
+          </div>
+        ))
+      }
+      </div>
+      
+
+    </div>
+  );
+};
+
+export default PlaylistPage;
+
+
+
+// <form onSubmit={handleSubmit}>
+//   <input
+//     type="text"
+//     value={playlistLink}
+//     onChange={handleInputChange}
+//     placeholder="Enter YouTube Playlist URL"
+   
+//     required
+//   />
+//   <button type="submit">Extract Playlist ID</button>
+// </form>
+// <h1>Playlist Videos</h1>
+// {playlistData && playlistData.items ? (
+//   <ul>
+//     {playlistData.items.map((item: any) => (
+
+//       <li key={item.id}>
+//         <a href={`https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`}>
+//         <p>{item.snippet.title}</p>
+//         <img src={item.snippet.thumbnails.default.url} alt="" />
+//         </a>
+//                 <iframe 
+//       width="560" 
+//       height="315" 
+//       src={`https://www.youtube.com/embed/${item.snippet.resourceId.videoId}`}
+//       title="YouTube video player" 
+      
+//       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+//       allowFullScreen
+
+// >
+// </iframe>
+        
+//       </li>
+//     ))}
+//   </ul>
+// ) : (
+//   <p>No data available</p>
+// )}
