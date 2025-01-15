@@ -20,7 +20,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="header flex items-center justify-between px-16 py-2  md:text-black bg-white w-full">
+    <header className="header flex items-center justify-between px-16 py-2  md:text-black bg-gradient-to-r from-white to-purple-500">
       <Link href="/dashboard">
         <img
           src="https://st2.depositphotos.com/1378583/5228/v/950/depositphotos_52283153-stock-illustration-hand-book-logo.jpg"

@@ -139,7 +139,7 @@ export default function signUpForm() {
                   {!isCheckingUsername && usernameMessage && (
                     <p
                       className={`text-sm ${
-                        usernameMessage === "Username is unique"
+                        usernameMessage === "Username available"
                           ? "text-green-500"
                           : "text-red-500"
                       }`}
@@ -158,7 +158,7 @@ export default function signUpForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <Input {...field} name="email" />
-                  <p className="text-muted text-gray-800 text-sm">
+                  <p className="text-muted text-blue-400 text-sm">
                     We will send you a verification code
                   </p>
                   <FormMessage />

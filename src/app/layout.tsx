@@ -5,6 +5,7 @@ import AuthProvider from "@/context/AuthProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
         
         {children}
         <Toaster/>
+        <Footer/>
       </body>
       </AuthProvider>
     </html>

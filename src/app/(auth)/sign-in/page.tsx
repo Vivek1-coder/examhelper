@@ -11,12 +11,13 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 
 export default function SignInForm(){
     const router = useRouter();
-
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const form = useForm<z.infer<typeof signInSchema>>({
         resolver:zodResolver(signInSchema),
         defaultValues:{
@@ -27,6 +28,7 @@ export default function SignInForm(){
 
     const {toast} = useToast();
     const onSubmit = async(data: z.infer<typeof signInSchema>) => {
+      setIsSubmitting(true);
         const result = await signIn('credentials',{
             redirect:false,
             identifier: data.identifier,
@@ -52,6 +54,7 @@ export default function SignInForm(){
           if (result?.url) {
             router.replace('/dashboard');
           }
+          setIsSubmitting(false);
         };
       
         return (
@@ -59,9 +62,9 @@ export default function SignInForm(){
               <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
                 <div className="text-center">
                   <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
-                    Welcome Back to True Feedback
+                    Welcome Back to Exam Buddy
                   </h1>
-                  <p className="mb-4">Sign in to continue your secret conversations</p>
+                  <p className="mb-4">Sign in to continue your preparation</p>
                 </div>
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -87,7 +90,14 @@ export default function SignInForm(){
                         </FormItem>
                       )}
                     />
-                    <Button className='w-full' type="submit">Sign In</Button>
+                    <Button className='w-full' type="submit" disabled={isSubmitting}>{isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </>
+              ) : (
+                "Sign Up"
+              )}</Button>
                   </form>
                 </Form>
                 <div className="text-center mt-4">

@@ -5,6 +5,7 @@ export interface PYQ extends Document{
     year:string,
     sem:string,
     subjectId:mongoose.Schema.Types.ObjectId,
+    userId:mongoose.Schema.Types.ObjectId,
     content:string,
     createdAt:Date
 
@@ -26,6 +27,11 @@ export const PYQSchema : Schema<PYQ> = new Schema({
     subjectId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Subject",
+        required:true
+    },
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
         required:true
     },
     sem:{

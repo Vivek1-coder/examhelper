@@ -6,6 +6,7 @@ export interface Playlist extends Document{
     playlistId:string,
     totalVideos:number,
     subjectId:mongoose.Schema.Types.ObjectId,
+    userId:mongoose.Schema.Types.ObjectId,
     createdAt:Date
 
 }
@@ -29,7 +30,12 @@ export const PlaylistSchema : Schema<Playlist> = new Schema({
     },
     subjectId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Playlist",
+        ref:"Subject",
+        required:true
+    },
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
         required:true
     },
     createdAt:{

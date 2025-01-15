@@ -7,6 +7,7 @@ export interface Video extends Document{
     author:string,
     playlistId:string,
     subjectId:mongoose.Schema.Types.ObjectId,
+    userId:mongoose.Schema.Types.ObjectId,
     createdAt:Date
 
 }
@@ -30,6 +31,11 @@ export const VideoSchema : Schema<Video> = new Schema({
     },
     playlistId:{
         type:String,
+        required:true
+    },
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
         required:true
     },
     subjectId:{

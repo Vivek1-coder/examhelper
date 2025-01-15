@@ -4,6 +4,7 @@ import mongoose,{Schema,Document} from "mongoose";
 export interface Subject extends Document{
     name:string,
     author:mongoose.Schema.Types.ObjectId,
+    groupId:mongoose.Schema.Types.ObjectId,
     authorName:string,
     isPublic: boolean,
     createdAt:Date
