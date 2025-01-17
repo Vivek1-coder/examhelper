@@ -37,14 +37,13 @@ const NavbarQues = () => {
   }, []);
 
   return (
-    <header className="header flex items-center justify-between px-16 py-2  md:text-black bg-white w-full">
-      <Link href="/dashboard">
-        <img
-          src="https://st2.depositphotos.com/1378583/5228/v/950/depositphotos_52283153-stock-illustration-hand-book-logo.jpg"
-          alt="logo"
-          className="w-10 h-10 object-contain"
-        />
+    <header className="header flex items-center justify-between px-16 py-2  md:text-white  bg-gradient-to-r from-black to-gray-100">
+     <Link href="/dashboard">
+      <Avatar className=' text-black'>
+        <AvatarFallback>XB</AvatarFallback>
+      </Avatar>
       </Link>
+    
       <button
         className={`hamburger ${isMenuOpen ? 'open' : ''}`}
         onClick={toggleMenu}
@@ -65,7 +64,7 @@ const NavbarQues = () => {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>Imp. Ques</BreadcrumbPage>
+                <BreadcrumbPage>Resource Type</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
       </Breadcrumb>

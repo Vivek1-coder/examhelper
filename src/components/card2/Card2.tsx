@@ -4,7 +4,7 @@ import axios from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
 import { useToast } from "@/hooks/use-toast";
 import { DeleteIcon, FilePenLine, Star, Trash2 } from "lucide-react";
-import "./card.css"
+import "./card2.css"
 import { useState } from "react";
 import DialogComponent from "../Dialog";
 import DialogComponentEdit from "../EditDialog";
@@ -69,8 +69,7 @@ export default function CardComponent({
 
   return (
     <div
-      className="flex flex-col rounded-lg gap-2 card h-52 overflow-y-auto"
-      style={{ width: "140px" }}
+      className="flex flex-col rounded-lg gap-2 card h-52 w-40 "
     >
       <div className="flex w-full h-20">
         <img
@@ -79,9 +78,9 @@ export default function CardComponent({
           alt=""
         />
       </div>
-      <div className="flex flex-col h-28 justify-center w-full text-center gap-2 overflow-y-auto">
+      <div className="flex flex-col h-28 justify-center w-full text-center gap-2">
         <a href={`/dashboard/subject/${subjectId}`}>
-          <p className="font-bold text-lg">{subjectName}</p>
+          <p className="font-bold text-lg h-10 overflow-y-auto">{subjectName}</p>
           <p className="font-light text-sm">Author: {author}</p>
           <p className="font-light text-sm">Likes: {likes}</p>
         </a>
@@ -89,7 +88,7 @@ export default function CardComponent({
 
 
       {isPublic ? (
-        <button className="text-red-800 rounded-lg m-2 flex justify-center"><Star/></button>
+        <button className="text-yellow-500 rounded-lg mb-1 flex justify-center"><Star/></button>
       ) : (
         <div className="flex w-full justify-between">
           <button

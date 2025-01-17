@@ -24,7 +24,7 @@ const NavbarHome = () => {
   }, []);
 
   return (
-    <header className="header flex items-center justify-between px-16 py-2  md:text-black bg-white w-full">
+    <header className="header flex items-center justify-between px-16 py-2  md:text-white bg-white w-full">
       <div className='flex gap-3 items-center'>
       <img
           src="https://st2.depositphotos.com/1378583/5228/v/950/depositphotos_52283153-stock-illustration-hand-book-logo.jpg"

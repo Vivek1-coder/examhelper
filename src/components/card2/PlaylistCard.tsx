@@ -2,7 +2,7 @@
 "use client";
 
 import { useToast } from '@/hooks/use-toast';
-import './card.css'
+import './card2.css'
 import axios from 'axios';
 import { ApiResponse } from '@/types/ApiResponse';
 import { Trash2 } from 'lucide-react';

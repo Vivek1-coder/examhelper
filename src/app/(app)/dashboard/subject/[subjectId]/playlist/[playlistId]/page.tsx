@@ -1,6 +1,6 @@
 'use client'
 import { VideoCard } from '@/components/card2/VideoCard'
-import NavbarQues from '@/components/Navbar/Navbar'
+import NavbarQues from '@/components/Navbar/VideoNavbar'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { useToast } from '@/hooks/use-toast'
 import { Video } from '@/model/Video.model'
@@ -55,7 +55,7 @@ const page = () => {
   }, [fetchAllVideos,toast])
   
   return (
-    <div className='relative h-screen '>
+    <div className='relative h-screen text-white'>
       <div className='absolute top-0 w-full'>
         <NavbarQues/>
       </div>

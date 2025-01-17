@@ -1,8 +1,10 @@
 'use client';
 import Link from 'next/link';
+import Home from '../../../public/Exambuddy.png'
 import './Navbar.css';
 import { useState, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import Image from 'next/image';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,13 +22,11 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="header flex items-center justify-between px-16 py-2  md:text-black bg-gradient-to-r from-white to-purple-500">
+    <header className="header flex items-center justify-between px-16 py-2  md:text-white bg-gradient-to-r from-black to-gray-100">
       <Link href="/dashboard">
-        <img
-          src="https://st2.depositphotos.com/1378583/5228/v/950/depositphotos_52283153-stock-illustration-hand-book-logo.jpg"
-          alt="logo"
-          className="w-10 h-10 object-contain"
-        />
+      <Avatar className=' text-black'>
+        <AvatarFallback>XB</AvatarFallback>
+      </Avatar>
       </Link>
       <button
         className={`hamburger ${isMenuOpen ? 'open' : ''}`}
@@ -42,7 +42,7 @@ const Navbar = () => {
           href="/dashboard/subject"
           className={`${
             isSmallScreen ? '' : 'nav-link'
-          } text-white md:text-black hover:text-yellow-400 text-center`}
+          } text-white md:text-black hover:text-white text-center`}
         >
           Subjects
         </Link>
@@ -50,7 +50,7 @@ const Navbar = () => {
           href="#"
           className={`${
             isSmallScreen ? '' : 'nav-link'
-          } text-white md:text-black hover:text-yellow-400 text-center`}
+          } text-white md:text-black hover:text-white text-center`}
         >
           Followers
         </Link>
@@ -58,7 +58,7 @@ const Navbar = () => {
           href="#"
           className={`${
             isSmallScreen ? '' : 'nav-link'
-          } text-white md:text-black hover:text-yellow-400 text-center`}
+          } text-white md:text-black hover:text-white text-center`}
         >
           Notifications
         </Link>
@@ -66,7 +66,7 @@ const Navbar = () => {
           href="#"
           className={`${
             isSmallScreen ? '' : 'nav-link'
-          } text-white md:text-black hover:text-yellow-400 text-center`}
+          } text-white md:text-black hover:text-white text-center`}
         >
           Groups
         </Link>

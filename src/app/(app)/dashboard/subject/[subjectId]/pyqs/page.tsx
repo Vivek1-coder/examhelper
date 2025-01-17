@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '@/components/Navbar/Notesnavbar';
+import Navbar from '@/components/Navbar/Pyqnavbar';
 const page = () => {
   return (
     <div>

@@ -1,6 +1,6 @@
 'use client'
 import { Card } from '@/components/card2/Card'
-import { Cardcomponent } from '@/components/card2/Card2'
+
 import DialogComponentV from '@/components/Dialog2'
 import Navbar from '@/components/Navbar/Navbar'
 import { useToast } from '@/hooks/use-toast'

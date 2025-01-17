@@ -66,7 +66,7 @@ const Subjectpage = () => {
 
             {isAllSubjects ? (
               <div
-                className="flex flex-wrap text-black rounded-lg justify-center gap-8"
+                className="flex flex-wrap text-white rounded-lg justify-center gap-8"
                 style={{ padding: "20px" }}
               >
                 {allSubjects.length > 0 ? (
@@ -83,7 +83,7 @@ const Subjectpage = () => {
                     />
                   ))
                 ) : (
-                  isSubjectLoading?<Loader2 className="animate-spin"/>:
+                  isSubjectLoading?<Loader2 className="animate-spin text-white"/>:
                   <p>No subjects found.</p>
                 )}
               </div>
@@ -91,7 +91,7 @@ const Subjectpage = () => {
               <div>
                 {subjects.length > 0 ? (
                   <div
-                    className="flex flex-wrap md:text-black rounded-lg justify-center gap-8"
+                    className="flex flex-wrap text-white rounded-lg justify-center gap-8"
                     style={{ padding: "20px" }}
                   >
                     {subjects.map((subject) => (
@@ -108,7 +108,7 @@ const Subjectpage = () => {
                     ))}
                   </div>
                 ) : (
-                  isSubjectLoading?<Loader2 className="animate-spin"/>:
+                  isSubjectLoading?<Loader2 className="animate-spin text-white"/>:
                   <p>No subjects found.</p>
                 )}
               </div>
@@ -119,7 +119,7 @@ const Subjectpage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 items-center gap-2 mt-4">
+          <div className="grid grid-cols-2 items-center gap-2 mt-4 text-white">
             <p>Want to see all public subjects:</p>
             <Switch checked={isAllSubjects} onCheckedChange={handleCheckboxChange} />
             <Label htmlFor="isPublic" className="text-right">

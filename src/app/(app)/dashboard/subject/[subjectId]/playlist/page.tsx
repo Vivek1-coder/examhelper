@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/card"
 import Link from 'next/link';
 import { PlaylistCard } from '@/components/card2/PlaylistCard';
-import NavbarQues from '@/components/Navbar/Navbar';
+import NavbarQues from '@/components/Navbar/Playlistnavbaar';
 import { Loader2 } from 'lucide-react';
 
 
@@ -74,7 +74,7 @@ const PlaylistPage = () => {
 
   return (
     
-    <div className='relative w-screen h-screen'>
+    <div className='relative w-screen h-screen text-white'>
       <div>
        <NavbarQues/>
       </div>

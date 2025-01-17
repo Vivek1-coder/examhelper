@@ -1,6 +1,6 @@
 'use client'
 import React, { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import DialogComponentV from '@/components/Dialog2';
 import {
   Accordion,
@@ -13,7 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import axios, { AxiosError } from 'axios';
 import { ApiResponse } from '@/types/ApiResponse';
 import Navbar from '@/components/Navbar/Navbar';
-import NavbarQues from '@/components/Navbar/Navbar';
+import NavbarQues from '@/components/Navbar/Quesnavbar';
 import EditquesDialog from '@/components/EditquesDialog';
 import { FilePenLine, Loader2 } from 'lucide-react';
 
@@ -23,6 +23,7 @@ const page = () => {
     const [isEditOpen,setIsEditOpen] = useState(false);
     const [isQuesLoading,setIsQuesLoading] = useState(true)
 
+   
     const handleEditClick = () => {
       setIsEditOpen(true);
     };
@@ -68,9 +69,9 @@ const page = () => {
     },[fetchUserQuestions])
   return (
 
-    <div>
+    <div className='h-screen w-screen'>
       <div className="absolute top-0 w-full">
-        <NavbarQues/>
+        <NavbarQues />
       </div>
       <div className='absolute top-20 right-3'>
       <DialogComponentV subjectId={subjectId as string} onAdd={fetchUserQuestions}/>
@@ -81,7 +82,7 @@ const page = () => {
       {
         ques.length > 0 ? 
         ques.map((q)=>(
-          <div key={q._id as string} className='text-black w-full'>
+          <div key={q._id as string} className='text-white w-full'>
           <Accordion type="single" collapsible>
           <AccordionItem value="item-1">
             <AccordionTrigger>

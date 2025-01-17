@@ -1,5 +1,5 @@
 'use client'
-import Navbarvideo from '@/components/Navbar/Navbarvideo';
+import Navbarvideo from '@/components/Navbar/Playvideonavbar';
 import VideoPlayer from '@/components/Videoplayer';
 import { Loader2 } from 'lucide-react';
 import { useParams } from 'next/navigation';
@@ -18,11 +18,11 @@ const page = () => {
       
   }, []);
   return (
-    <div>
-      <div>
+    <div className='h-screen w-full relative text-white overflow-x-clip'>
+      <div className='absolute top-0 w-screen'>
       <Navbarvideo/>
       </div>
-      <div className='  w-full h-1/2'>
+      <div className='w-full h-1/2 absolute top-16 '>
       
       {loading ? <div className='flex justify-center items-center w-full'><Loader2 className='animate-spin'/></div> : <VideoPlayer videoId={`${videoId}`}/>}
       </div>
