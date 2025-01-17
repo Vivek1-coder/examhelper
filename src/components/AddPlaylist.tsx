@@ -15,8 +15,9 @@ import { useSession } from "next-auth/react";
 import axios, { AxiosError } from "axios";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { SquarePlus } from "lucide-react";
 
-const AddPlaylist = ({ subjectId }: { subjectId: string }) => {
+const AddPlaylist = ({ subjectId,onAdd }: { subjectId: string,onAdd:()=>void }) => {
   const [name, setName] = useState("");
   const [playlistLink, setPlaylistLink] = useState<string>("");
   const { data: session } = useSession();
@@ -65,7 +66,7 @@ const AddPlaylist = ({ subjectId }: { subjectId: string }) => {
         title: "Success",
         description: response.data.message,
       });
-
+      onAdd();
       setName("");
       setPlaylistLink("");
     } catch (error) {
@@ -89,14 +90,14 @@ const AddPlaylist = ({ subjectId }: { subjectId: string }) => {
     <div className="m-2">
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline" className="rounded-full bg-red-500">
-            + ADD
+          <Button variant="outline" className="rounded-full h-16 ">
+            <SquarePlus style={{ height: "40px", width: "40px", color: "green" }}/>
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Add Playlist</DialogTitle>
-            <DialogDescription>Add a new playlist to the subject.</DialogDescription>
+            <DialogDescription>Add a new playlist to the subject.If videos are more than 50 make more than one public playlists from them.</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">

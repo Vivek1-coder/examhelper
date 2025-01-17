@@ -1,6 +1,9 @@
 import dbConnect from '@/lib/dbConnect';
 import PlaylistModel from '@/model/Playlist.model';
 import VideoModel from '@/model/Video.model';
+import { getServerSession, User } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]/options";
+import mongoose from 'mongoose';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const YOUTUBE_PLAYLIST_ITEMS_API = 'https://www.googleapis.com/youtube/v3/playlistItems';
@@ -12,7 +15,23 @@ export async function POST(req: Request) {
     const { searchParams } = new URL(req.url);
     const playlistId = searchParams.get("playlistId");
     const subjectId = searchParams.get("subjectId");
+    
+
     const { name } = await req.json();
+    const session = await getServerSession(authOptions)
+        const user:User = session?.user as User
+
+        if(!session || !session.user){
+            return Response.json(
+                {
+                    success : false,
+                    message:"Not Authentication"
+                },
+                { status : 401 }
+            )
+        }
+
+        const userId = new mongoose.Types.ObjectId(user._id);
 
     if (!process.env.YOUTUBE_API) {
       return new Response(
@@ -54,6 +73,7 @@ export async function POST(req: Request) {
       playlistId,
       totalVideos,
       subjectId,
+      userId
     });
 
     await newPlaylist.save();
@@ -63,8 +83,9 @@ export async function POST(req: Request) {
             thumbnail: item?.snippet?.thumbnails?.default?.url || '',
             title: item?.snippet?.title || 'Untitled',
             videoId: item?.snippet?.resourceId?.videoId || '',
-            playlistId,
+            playlistId:newPlaylist._id,
             subjectId,
+            userId,
             author: item?.snippet?.videoOwnerChannelTitle || 'Unknown',
           }));
         

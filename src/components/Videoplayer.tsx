@@ -1,3 +1,4 @@
+import { LaptopMinimal, Minimize, Minimize2 } from 'lucide-react';
 import { useState } from 'react';
 
 const VideoPlayer = ({ videoId }: { videoId: string }) => {
@@ -17,11 +18,11 @@ const VideoPlayer = ({ videoId }: { videoId: string }) => {
   return (
     <div className="relative">
       <div
-        className={`flex justify-center w-full transition-all duration-300 ${isTheatreMode ? 'w-full' : isMiniPlayer ? 'w-32 h-18' : 'w-full'}`}
+        className={`flex justify-center w-full transition-all duration-300 ${isTheatreMode ? 'w-full' : isMiniPlayer ? 'w-52 h-52' : 'w-full'}`}
         style={{
           position: isMiniPlayer ? 'fixed' : 'relative',
-          bottom: isMiniPlayer ? '10px' : 'auto',
-          right: isMiniPlayer ? '10px' : 'auto',
+          bottom: isMiniPlayer ? '50px' : 'auto',
+          right: isMiniPlayer ? '50px' : 'auto',
         }}
       >
         <iframe
@@ -38,16 +39,16 @@ const VideoPlayer = ({ videoId }: { videoId: string }) => {
       {/* Buttons for switching modes */}
       <div className="absolute top-0 right-0 p-2">
         <button
-          className="bg-red-600 text-white p-2 m-2 rounded"
+          className=" text-blue-500 p-2 m-2 rounded"
           onClick={toggleTheatreMode}
         >
-          {isTheatreMode ? 'Exit Theatre Mode' : 'Theatre Mode'}
+          {isTheatreMode ? <Minimize/> : <LaptopMinimal/>}
         </button>
         <button
-          className="bg-red-600 text-white p-2 m-2 rounded"
+          className=" text-blue-500 p-2 m-2 rounded"
           onClick={toggleMiniPlayer}
         >
-          {isMiniPlayer ? 'Exit MiniPlayer' : 'MiniPlayer'}
+          {isMiniPlayer ? <Minimize/> : <Minimize2/>}
         </button>
       </div>
     </div>

@@ -6,6 +6,8 @@ import { useToast } from '@/hooks/use-toast'
 import { Video } from '@/model/Video.model'
 import { ApiResponse } from '@/types/ApiResponse'
 import axios, { AxiosError } from 'axios'
+import { Loader2 } from 'lucide-react'
+import { setLazyProp } from 'next/dist/server/api-utils'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -13,6 +15,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 const page = () => {
 
   const [videos,setVideos] = useState<Video[]>([])
+  const [loading,setLoading] = useState(true)
   const {toast} = useToast();
 
   const params = useParams();
@@ -22,6 +25,7 @@ const page = () => {
   const fetchAllVideos = useCallback(
     async(refresh:boolean= false)=>{
       try {
+        setLoading(true);
         const response = await axios.get<ApiResponse>(`/api/playlist/get-videos?subjectId=${subjectId}&playlistId=${playlistId}`)
         setVideos(response.data.videos||[])
 
@@ -31,6 +35,7 @@ const page = () => {
             description:"Showing refreshed videos"
           });
         }
+        setLoading(false);
       } catch (error) {
          const axiosError = error as AxiosError<ApiResponse>;
                 toast({
@@ -40,6 +45,7 @@ const page = () => {
                   variant: "destructive",
                 });
                 console.error("Error fetching user subjects:", error);
+                setLoading(false);
               }
     },[toast]
   )
@@ -49,12 +55,13 @@ const page = () => {
   }, [fetchAllVideos,toast])
   
   return (
-    <div>
-      <div>
+    <div className='relative h-screen '>
+      <div className='absolute top-0 w-full'>
         <NavbarQues/>
       </div>
-      <div className='flex flex-wrap justify-center p-10 mx-5 h-5/6 overflow-y-auto gap-6'>
-      {
+      <div className="w-full flex flex-col justify-center items-center h-full">
+      <div className="flex flex-wrap w-4/5 h-3/4 justify-center rounded-3xl p-3 overflow-y-auto gap-8">
+      { videos.length > 0 ?
         videos.map((video)=>(
           <div key={video._id as string}>
             <Link href={`${playlistId}/play-video/${video.videoId}`}>
@@ -65,8 +72,12 @@ const page = () => {
               />
             </Link>
           </div>
-        ))
+        )) : loading ?<Loader2 className="animate-spin"/>:
+        <p>No videos found.</p>
       }
+
+      </div>
+      
       </div>
     
     </div>

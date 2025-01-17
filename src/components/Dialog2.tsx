@@ -23,10 +23,11 @@ import { ApiResponse } from '@/types/ApiResponse'
 import axios, { AxiosError } from 'axios'
 import { useToast } from '@/hooks/use-toast'
 import { useRouter } from "next/navigation"
+import { ListPlus } from "lucide-react"
 
 
 
-const DialogComponentV = ({ subjectId }: { subjectId: string }) => {
+const DialogComponentV = ({ subjectId,onAdd }: { subjectId: string,onAdd:()=>void }) => {
 
     const [ques,setQues] = useState('')
     const [ans,setAns] = useState('')
@@ -49,6 +50,7 @@ const DialogComponentV = ({ subjectId }: { subjectId: string }) => {
               description:response.data.message
             })
             
+            onAdd();
         
             
 
@@ -78,7 +80,7 @@ const DialogComponentV = ({ subjectId }: { subjectId: string }) => {
         <div className="m-2">
           <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline" className="rounded-full" style={{backgroundColor:"red"}}>+ ADD</Button>
+            <Button variant="outline" className="rounded-full text-blue-600" ><ListPlus/></Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>

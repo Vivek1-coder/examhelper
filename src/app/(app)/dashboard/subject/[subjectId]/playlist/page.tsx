@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import AddPlaylist from '@/components/AddPlaylist';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { Playlist } from '@/model/Playlist.model';
 import { ApiResponse } from '@/types/ApiResponse';
 import { useToast } from '@/hooks/use-toast';
@@ -18,6 +18,7 @@ import {
 import Link from 'next/link';
 import { PlaylistCard } from '@/components/card2/PlaylistCard';
 import NavbarQues from '@/components/Navbar/Navbar';
+import { Loader2 } from 'lucide-react';
 
 
 const PlaylistPage = () => {
@@ -28,6 +29,7 @@ const PlaylistPage = () => {
   const {toast} = useToast();
   const params = useParams();
   const subjectId = params?.subjectId;
+  const router = useRouter()
 
   // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   setPlaylistLink(e.target.value);
@@ -37,6 +39,7 @@ const PlaylistPage = () => {
   const fetchAllPlaylists = useCallback(
     async(refresh:boolean = false)=>{
       try {
+        setLoading(true);
         const response = await axios.get<
         ApiResponse>(`/api/playlist/get-playlist?subjectId=${subjectId}`);
         setPlaylistData(response.data.playlists || [])
@@ -47,6 +50,7 @@ const PlaylistPage = () => {
             description:"Showing refreshed playlists"
           });
         }
+        setLoading(false)
       } catch (error) {
         const axiosError = error as AxiosError<ApiResponse>
         toast({
@@ -55,7 +59,9 @@ const PlaylistPage = () => {
           axiosError.response?.data.message || "Failed to fetch playlist",
         variant: "destructive",
         })
+        setLoading(false);
       }
+
     },[toast]
   )
 
@@ -73,22 +79,26 @@ const PlaylistPage = () => {
        <NavbarQues/>
       </div>
       <div className='absolute top-24 right-11'>
-      <AddPlaylist subjectId={`${subjectId}`} />
+      <AddPlaylist subjectId={`${subjectId}`} onAdd={fetchAllPlaylists} />
       </div>
       <div className='flex flex-wrap justify-center p-10 mx-5 h-5/6 overflow-y-auto gap-6'>
 
-      {
+      {playlistData.length>0 ?
         playlistData.map((playlists)=>(
           <div key={playlists._id as string}>
-            <Link href={`playlist/${playlists.playlistId}`}>
+            
               <PlaylistCard 
+              playlistId={playlists._id as string}
+              subjectId={playlists.subjectId.toString()}
               thumbnail={`${playlists.thumbnail}`} 
               title={playlists.name}
+              onDelete={fetchAllPlaylists}
               nvideos={playlists.totalVideos}
               />
-            </Link>
+            
           </div>
-        ))
+        )) : loading ?<Loader2 className="animate-spin"/>:
+        <p>No playlists found.</p>
       }
       </div>
       

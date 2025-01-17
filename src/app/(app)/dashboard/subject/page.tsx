@@ -11,6 +11,7 @@ import CardComponent from "@/components/card2/Card2";
 import Navbar from "@/components/Navbar/Navbar2";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Loader2 } from "lucide-react";
 
 const Subjectpage = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -18,16 +19,23 @@ const Subjectpage = () => {
   const [isAllSubjects, setIsAllSubjects] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
+  const [isSubjectLoading,setIsSubjectsLoading] = useState(true);
 
   const refreshData = useCallback(async () => {
     try {
+      setIsSubjectsLoading(true);
       const response = isAllSubjects
         ? await axios.get<ApiResponse>("/api/subject/get-all-subjects")
         : await axios.get<ApiResponse>("/api/subject/get-user-subjects");
 
       const fetchedSubjects = response.data.subjects || [];
-      isAllSubjects ? setAllSubjects(fetchedSubjects) : setSubjects(fetchedSubjects);
+      isAllSubjects ? setAllSubjects(fetchedSubjects) : 
+      
+      setSubjects(fetchedSubjects);
+      setIsSubjectsLoading(false);
+
     } catch (error) {
+      setIsSubjectsLoading(false);
       const axiosError = error as AxiosError<ApiResponse>;
       toast({
         title: "Error",
@@ -55,6 +63,7 @@ const Subjectpage = () => {
 
         <div className="w-full flex flex-col justify-center items-center h-full">
           <div className="flex w-4/5 h-3/4 justify-center rounded-3xl p-3 overflow-y-auto">
+
             {isAllSubjects ? (
               <div
                 className="flex flex-wrap text-black rounded-lg justify-center gap-8"
@@ -69,10 +78,12 @@ const Subjectpage = () => {
                       likes={0}
                       author={subject.authorName}
                       isPublic={true}
+                      onUpdate={refreshData}
                       onDelete={refreshData} // Trigger refresh after deletion
                     />
                   ))
                 ) : (
+                  isSubjectLoading?<Loader2 className="animate-spin"/>:
                   <p>No subjects found.</p>
                 )}
               </div>
@@ -91,11 +102,13 @@ const Subjectpage = () => {
                         likes={0}
                         author="Self"
                         isPublic={false}
+                        onUpdate={refreshData}
                         onDelete={refreshData} // Trigger refresh after deletion
                       />
                     ))}
                   </div>
                 ) : (
+                  isSubjectLoading?<Loader2 className="animate-spin"/>:
                   <p>No subjects found.</p>
                 )}
               </div>

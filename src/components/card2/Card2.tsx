@@ -5,12 +5,16 @@ import { ApiResponse } from "@/types/ApiResponse";
 import { useToast } from "@/hooks/use-toast";
 import { DeleteIcon, FilePenLine, Star, Trash2 } from "lucide-react";
 import "./card.css"
+import { useState } from "react";
+import DialogComponent from "../Dialog";
+import DialogComponentEdit from "../EditDialog";
 interface CardProps {
   subjectName: string;
   subjectId: string;
   author: string;
   likes: number;
   isPublic: boolean;
+  onUpdate: () => void;
   onDelete?: () => void; // Callback to trigger data refresh
 }
 
@@ -21,8 +25,18 @@ export default function CardComponent({
   likes,
   isPublic,
   onDelete,
+  onUpdate
 }: CardProps) {
   const { toast } = useToast();
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditOpen(true);
+  };
+
+  const handleEditClose = () => {
+    setIsEditOpen(false);
+  };
 
   const handleDelete = async () => {
     try {
@@ -85,12 +99,20 @@ export default function CardComponent({
           <Trash2/>
         </button>
         <button 
-          onClick={handleDelete}
+          onClick={handleEditClick}
           className=" text-blue-500 rounded-lg mb-2 w-1/2"
         >
           <FilePenLine/>
         </button>
-      
+        {isEditOpen && (
+        <DialogComponentEdit
+          subjectId={subjectId}
+          initialName={subjectName}
+          initialIsPublic={isPublic}
+          onClose={handleEditClose}
+          onUpdate={onUpdate}
+        />
+      )}
         </div>
       )}
       

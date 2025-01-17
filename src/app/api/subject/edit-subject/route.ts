@@ -3,7 +3,7 @@ import { getServerSession, User } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import mongoose from "mongoose";
 
-export async function POST(request:Request){
+export async function PUT(request:Request){
     await dbConnect();
 
     const session = await getServerSession(authOptions)
@@ -41,7 +41,7 @@ export async function POST(request:Request){
             return Response.json(
             {
                 success: false,
-                message: "Subject not found or you are not authorized to delete this subject"
+                message: "Subject not found or you are not authorized to update this subject"
             },
             {
                 status: 404
@@ -51,18 +51,18 @@ export async function POST(request:Request){
         return Response.json(
             {
                 success:true,
-                message:"Subject Deleted successfully",
+                message:"Subject Updated successfully",
                 
             },{
                 status:200
             }
         )
     } catch (error) {
-        console.error('Error in deleting subject',error);
+        console.error('Error in updating subject',error);
         return Response.json(
             {
                 success: false,
-            message: 'Error in deleting subject',
+            message: 'Error in updating subject',
           },
           { status: 500 }
         );

@@ -5,7 +5,7 @@ export interface Video extends Document{
     title:string,
     videoId:string,
     author:string,
-    playlistId:string,
+    playlistId:mongoose.Schema.Types.ObjectId,
     subjectId:mongoose.Schema.Types.ObjectId,
     userId:mongoose.Schema.Types.ObjectId,
     createdAt:Date
