@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 import { Loader2 } from "lucide-react";
 
 
@@ -56,13 +57,31 @@ export default function SignInForm(){
           }
           setIsSubmitting(false);
         };
+        
+        const handleGoogleSignIn = async () => {
+          setIsSubmitting(true);
+          const result = await signIn('google', { redirect: false });
+      
+          if (result?.error) {
+            toast({
+              title: 'Error',
+              description: result.error,
+              variant: 'destructive',
+            });
+          }
+      
+          if (result?.url) {
+            router.replace('/dashboard');
+          }
+          setIsSubmitting(false);
+        };
       
         return (
             <div className="flex justify-center items-center min-h-screen bg-gray-800">
               <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
                 <div className="text-center">
                   <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
-                    Welcome Back to Exam Buddy
+                    Welcome Back to Xam Buddy
                   </h1>
                   <p className="mb-4">Sign in to continue your preparation</p>
                 </div>
@@ -99,16 +118,29 @@ export default function SignInForm(){
                 "Sign Up"
               )}</Button>
                   </form>
-                </Form>
-                <div className="text-center mt-4">
-                  <p>
-                    Not a member yet?{' '}
-                    <Link href="/sign-up" className="text-blue-600 hover:text-blue-800">
-                      Sign up
-                    </Link>
-                  </p>
-                </div>
-              </div>
-            </div>
-          );
-        }
+                  </Form>
+        <div className="flex items-center justify-center my-4">
+          <hr className="w-1/3 border-t border-gray-300" />
+          <span className="mx-2 text-gray-500">or</span>
+          <hr className="w-1/3 border-t border-gray-300" />
+        </div>
+        <Button
+          className="w-full flex items-center justify-center bg-white text-gray-700 border border-gray-300"
+          onClick={handleGoogleSignIn}
+          disabled={isSubmitting}
+        >
+          <FcGoogle className="mr-2" size={20} />
+          Sign In with Google
+        </Button>
+        <div className="text-center mt-4">
+          <p>
+            Not a member yet?{' '}
+            <Link href="/sign-up" className="text-blue-600 hover:text-blue-800">
+              Sign up
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}

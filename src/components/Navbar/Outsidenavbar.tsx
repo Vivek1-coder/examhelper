@@ -24,14 +24,14 @@ const NavbarHome = () => {
   }, []);
 
   return (
-    <header className="header flex items-center justify-between px-16 py-2  md:text-white bg-white w-full">
+    <header className="header flex items-center justify-between px-16 py-2  md:text-white  bg-gradient-to-r from-black to-gray-100">
       <div className='flex gap-3 items-center'>
-      <img
-          src="https://st2.depositphotos.com/1378583/5228/v/950/depositphotos_52283153-stock-illustration-hand-book-logo.jpg"
-          alt="logo"
-          className="w-10 h-10 object-contain"
-        />
-      <p className='bg-clip-text text-transparent font-extrabold bg-gradient-to-r from-blue-400 to-violet-800'>Exam Buddy</p>
+      <Link href="/dashboard">
+        <Avatar className=" text-black">
+          <AvatarFallback>XB</AvatarFallback>
+        </Avatar>
+      </Link>
+      <p className='bg-clip-text text-transparent font-extrabold bg-gradient-to-r from-blue-400 to-violet-800'>Xam Buddy</p>
       </div>
         
       

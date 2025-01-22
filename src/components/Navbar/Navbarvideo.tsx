@@ -18,10 +18,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useSession } from 'next-auth/react';
 
 
 
 const Navbarvideo = () => {
+  const { data: session, status } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
@@ -72,7 +74,7 @@ const Navbarvideo = () => {
       
       <Link href="/profile">
       <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" />
+        <AvatarImage src={session?.user.image} />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       </Link>

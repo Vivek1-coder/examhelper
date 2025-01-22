@@ -1,21 +1,28 @@
+'use client'
 import NavbarQues from '@/components/Navbar/Navbar'
 import Navbar from '@/components/Navbar/Navbar2'
 import Typewriter from '@/components/TypingAnimation/Typewriter'
 import React from 'react'
 import Image from 'next/image'
 import Home from '../../../../public/Exambuddy.png'
+import { useSession } from 'next-auth/react'
+
 // import { NavbarComponent } from '@/components/Navbar'
 
 const Dashboard = () => {
+  const { data: session, status } = useSession();
+
   return (
-    <div className='relative'>
-      <div className="absolute top-0 w-full ">
+    <div className='relative '>
+      <div className="absolute top-0 w-full text-white ">
         <Navbar/>
         </div>
       
         <div className='flex justify-center items-center'>
       <div className=" w-1/2 flex justify-center">
       <div className='w-3/4 rounded-xl ml-6 text-center p-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'>
+      <p className='text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-white to-green-500'>Welcome {session?.user.name} !!!</p>
+      <br/>
       <p className="text-xl font-medium tracking-wide">
         Take charge of your studies with ease!
       </p>

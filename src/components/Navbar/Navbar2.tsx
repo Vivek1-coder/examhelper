@@ -5,8 +5,11 @@ import './Navbar.css';
 import { useState, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+
 
 const Navbar = () => {
+  const { data: session, status } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
@@ -74,7 +77,7 @@ const Navbar = () => {
       
       <Link href="/profile">
       <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" />
+        <AvatarImage src={session?.user.image} />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       </Link>

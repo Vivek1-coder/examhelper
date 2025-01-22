@@ -22,7 +22,7 @@ import { useRouter } from "next/router";
 import { useParams } from "next/navigation";
 
 
-const NavbarQues = () => {
+const NotesNavbar = () => {
    const params = useParams();
        const subjectId = params?.subjectId;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -98,4 +98,4 @@ const NavbarQues = () => {
   );
 };
 
-export default NavbarQues;
+export default NotesNavbar;

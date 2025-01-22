@@ -2,8 +2,8 @@ import mongoose,{Schema,Document} from "mongoose";
 
 export interface PYQ extends Document{
     name:string,
-    year:string,
-    sem:string,
+    year:number,
+    sem:number,
     subjectId:mongoose.Schema.Types.ObjectId,
     userId:mongoose.Schema.Types.ObjectId,
     content:string,
@@ -17,7 +17,7 @@ export const PYQSchema : Schema<PYQ> = new Schema({
         required:true
     },
     year:{
-        type:String,
+        type:Number,
         required:true
     },
     content:{
@@ -35,7 +35,7 @@ export const PYQSchema : Schema<PYQ> = new Schema({
         required:true
     },
     sem:{
-        type:String,
+        type:Number,
         required:true
     },
     createdAt:{
