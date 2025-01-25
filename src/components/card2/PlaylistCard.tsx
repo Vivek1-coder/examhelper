@@ -6,7 +6,7 @@ import './card2.css'
 import axios from 'axios';
 import { ApiResponse } from '@/types/ApiResponse';
 import { Trash2 } from 'lucide-react';
-import mongoose from 'mongoose';
+import Image from "next/image";
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 

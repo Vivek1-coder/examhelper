@@ -5,19 +5,12 @@ import { useState, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Breadcrumb,
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { useSession } from 'next-auth/react';
 
 
@@ -41,11 +34,9 @@ const Navbarvideo = () => {
   return (
     <header className="header flex items-center justify-between px-16 py-2  md:text-black bg-white w-full">
       <Link href="/dashboard">
-        <img
-          src="https://st2.depositphotos.com/1378583/5228/v/950/depositphotos_52283153-stock-illustration-hand-book-logo.jpg"
-          alt="logo"
-          className="w-10 h-10 object-contain"
-        />
+      <Avatar className=' text-black'>
+        <AvatarFallback>XB</AvatarFallback>
+      </Avatar>
       </Link>
       <button
         className={`hamburger ${isMenuOpen ? 'open' : ''}`}

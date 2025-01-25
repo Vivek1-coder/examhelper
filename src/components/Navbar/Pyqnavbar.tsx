@@ -18,8 +18,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { useRouter } from "next/router";
 import { useParams } from "next/navigation";
 
 

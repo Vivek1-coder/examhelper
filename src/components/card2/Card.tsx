@@ -1,6 +1,7 @@
 
 "use client";
-
+import subjectLogo from "../../../public/subjectLogo.jpg"
+import Image from "next/image";
 import './card2.css'
 
 interface cardprops{
@@ -16,7 +17,7 @@ export function Card({subjectName,subjectId,author,likes,title}:cardprops) {
     <a href={`/dashboard/subject/${subjectId}/${title}`}>
     <div className='h-56 w-56 flex flex-col rounded-2xl gap-2 card border text-white' >
         <div className='flex w-full h-20'>
-        <img className = " rounded-t-lg" src="https://static.vecteezy.com/system/resources/previews/014/572/370/non_2x/line-icon-for-subject-vector.jpg" alt="" />
+        <Image src={subjectLogo} className="rounded-t-lg"  alt="" />
         </div>
         <div className='flex flex-col justify-center w-full text-center  gap-2 p-2 '>
         <p className='font-bold text-lg'>{subjectName}</p>

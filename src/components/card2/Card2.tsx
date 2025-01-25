@@ -2,11 +2,12 @@
 
 import axios from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
+import subjectLogo from "../../../public/subjectLogo.jpg"
 import { useToast } from "@/hooks/use-toast";
-import { DeleteIcon, FilePenLine, Star, Trash2 } from "lucide-react";
+import { FilePenLine, Star, Trash2 } from "lucide-react";
 import "./card2.css"
+import Image from "next/image";
 import { useState } from "react";
-import DialogComponent from "../Add/Dialog";
 import DialogComponentEdit from "../Edit/EditDialog";
 interface CardProps {
   subjectName: string;
@@ -72,9 +73,9 @@ export default function CardComponent({
       className="flex flex-col rounded-lg gap-2 card h-52 w-40 "
     >
       <div className="flex w-full h-20">
-        <img
+        <Image
           className="rounded-t-lg"
-          src="https://static.vecteezy.com/system/resources/previews/014/572/370/non_2x/line-icon-for-subject-vector.jpg"
+          src={subjectLogo}
           alt=""
         />
       </div>
