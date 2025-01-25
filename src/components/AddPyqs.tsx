@@ -34,71 +34,112 @@ const AddPyqs = ({ onAdd }: { onAdd: () => void }) => {
       const params = useParams();
       const subjectId = params?.subjectId;
    
-     const handleFileUpload = async (e: React.MouseEvent<HTMLButtonElement>) => {
+      const handleFileUpload = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-    setIsCreating(true)
+        setIsCreating(true);
+      
         if (!session) {
           setResultMessage(<p>Please log in to upload files.</p>);
           return;
         }
-    
+      
         const file = pyqfile;
         if (!file) {
+          setResultMessage(<p>Please select a file to upload.</p>);
           return;
         }
-        
+      
         const metadata = {
-          name: name
+          name: name,
         };
-        console.log(pyqfile)
+      
         const body = new FormData();
         body.append(
-          'metadata',
+          "metadata",
           new Blob([JSON.stringify(metadata)], {
-            type: 'application/json',
+            type: "application/json",
           })
         );
-        console.log('Access Token:', session?.user?.accessToken);
-        body.append('file', file);
-    
+        body.append("file", file);
+      
         try {
-          const response = await fetch(
-            'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',
+          // Upload the file to Google Drive
+          const uploadResponse = await fetch(
+            "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
             {
-              method: 'POST',
+              method: "POST",
               body: body,
               headers: {
-                Authorization: `Bearer ${session?.user?.accessToken}`, // Correctly use the session access token.
+                Authorization: `Bearer ${session?.user?.accessToken}`,
               },
             }
           );
-          console.log('Access Token:', session?.user?.accessToken);
-    
-          if (response.ok) {
-            const responseData = await response.json();
-    
-            const fileId = responseData.id;
-            const result = await axios.post<ApiResponse>(`/api/pyqs/add-pyq?subjectId=${subjectId}`,{
-              name,content:fileId,year,semester
-            })
-            
+      
+          if (uploadResponse.ok) {
+            const uploadData = await uploadResponse.json();
+            const fileId = uploadData.id;
+      
+            // Set the file to be publicly viewable
+            const permissionsResponse = await fetch(
+              `https://www.googleapis.com/drive/v3/files/${fileId}/permissions`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${session?.user?.accessToken}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  role: "reader",
+                  type: "anyone",
+                }),
+              }
+            );
+      
+            if (permissionsResponse.ok) {
+              // Save the file ID and metadata in your database
+              await axios.post<ApiResponse>(
+                `/api/pyqs/add-pyq?subjectId=${subjectId}`,
+                {
+                  name,
+                  content: fileId,
+                  year,
+                  semester,
+                }
+              );
+      
+              setResultMessage(
+                <p className="text-green-600">
+                  Uploaded successfully and set to public!
+                </p>
+              );
+            } else {
+              const errorData = await permissionsResponse.json();
+              console.error("Error setting file permissions:", errorData);
+              setResultMessage(
+                <p className="text-red-600">
+                  Error setting file permissions: {errorData.error.message}
+                </p>
+              );
+            }
+          } else {
+            const errorData = await uploadResponse.json();
+            console.error("Error uploading file:", errorData);
             setResultMessage(
-              <p className="text-green-600">
-                Uploaded Successfully
+              <p className="text-red-600">
+                Error uploading file: {errorData.error.message}
               </p>
             );
-          } else {
-            const errorData = await response.json();
-            console.error('Error uploading file:', errorData);
-            setResultMessage(<p>Error uploading file: {errorData.error.message}</p>);
           }
         } catch (error) {
-          console.error('Error:', error);
-          setResultMessage(<p>An unexpected error occurred.</p>);
-        }finally{
-          setIsCreating(false)
+          console.error("Error:", error);
+          setResultMessage(
+            <p className="text-red-600">An unexpected error occurred.</p>
+          );
+        } finally {
+          setIsCreating(false);
         }
       };
+      
   
     return (
       <div className="m-2">

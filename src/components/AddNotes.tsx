@@ -32,73 +32,98 @@ const AddNotes = ({ onAdd }: { onAdd: () => void }) => {
     const params = useParams();
     const subjectId = params?.subjectId;
  
-   const handleFileUpload = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleFileUpload = async (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-  setIsCreating(true)
+      setIsCreating(true);
+    
       if (!session) {
         setResultMessage(<p>Please log in to upload files.</p>);
         return;
       }
-  
+    
       const file = notefile;
       if (!file) {
+        setResultMessage(<p>Please select a file to upload.</p>);
         return;
       }
-      
+    
       const metadata = {
-        name: name
+        name: name,
       };
-      console.log(notefile)
+    
       const body = new FormData();
       body.append(
-        'metadata',
+        "metadata",
         new Blob([JSON.stringify(metadata)], {
-          type: 'application/json',
+          type: "application/json",
         })
       );
-      console.log('Access Token:', session?.user?.accessToken);
-      body.append('file', file);
-  
+      body.append("file", file);
+    
       try {
-        const response = await fetch(
-          'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',
+        // Upload the file to Google Drive
+        const uploadResponse = await fetch(
+          "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
           {
-            method: 'POST',
+            method: "POST",
             body: body,
             headers: {
-              Authorization: `Bearer ${session?.user?.accessToken}`, // Correctly use the session access token.
+              Authorization: `Bearer ${session?.user?.accessToken}`,
             },
           }
         );
-        console.log('Access Token:', session?.user?.accessToken);
-  
-        if (response.ok) {
-          const responseData = await response.json();
-  
-          const fileId = responseData.id;
-          const result = await axios.post<ApiResponse>(`/api/notes/add-note?subjectId=${subjectId}`,{
-            name,content:fileId
-          })
-          
-          setResultMessage(
-            <p>
-              Uploaded Successfully
-            </p>
+    
+        if (uploadResponse.ok) {
+          const uploadData = await uploadResponse.json();
+          const fileId = uploadData.id;
+    
+          // Set the file to be publicly viewable
+          const permissionsResponse = await fetch(
+            `https://www.googleapis.com/drive/v3/files/${fileId}/permissions`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${session?.user?.accessToken}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                role: "reader",
+                type: "anyone",
+              }),
+            }
           );
-          onAdd()
-        } else {
-          const errorData = await response.json();
-          console.error('Error uploading file:', errorData);
+    
+          if (permissionsResponse.ok) {
+            // Save the file ID and metadata in your database
+            await axios.post<ApiResponse>(
+              `/api/notes/add-note?subjectId=${subjectId}`,
+              {
+                name,
+                content: fileId,
+              }
+            );
+    
+            setResultMessage(<p>Uploaded successfully!!</p>);
+            onAdd();
+          } else {
+            const errorData = await permissionsResponse.json();
+            console.error("Error setting file permissions:", errorData);
+            setResultMessage(<p>Error setting file permissions: {errorData.error.message}</p>);
+          }
+      } else {
+          const errorData = await uploadResponse.json();
+          console.error("Error uploading file:", errorData);
           setResultMessage(<p>Error uploading file: {errorData.error.message}</p>);
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
         setResultMessage(<p>An unexpected error occurred.</p>);
-      }finally{
-        setIsCreating(false)
+      } finally {
+        setIsCreating(false);
       }
     };
-
+    
+    
   return (
     <div className="m-2">
       <Dialog>

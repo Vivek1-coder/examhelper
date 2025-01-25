@@ -1,7 +1,7 @@
 
 "use client";
 
-import './card.css'
+import './card2.css'
 
 interface cardprops{
     subjectName:string;

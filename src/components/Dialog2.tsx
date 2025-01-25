@@ -84,9 +84,9 @@ const DialogComponentV = ({ subjectId,onAdd }: { subjectId: string,onAdd:()=>voi
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Add Subject</DialogTitle>
+              <DialogTitle>Add Question</DialogTitle>
               <DialogDescription>
-                Add a new subject you want to..
+                Add important question and answer..
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">

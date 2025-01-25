@@ -8,7 +8,7 @@ import PYQModel from "@/model/PYQ.model";
 export async function GET(request:Request){
     await dbConnect()
     const session = await getServerSession(authOptions)
-    console.log("Session:", session);
+    
 
     const { searchParams } = new URL(request.url);
     const subjectId = searchParams.get("subjectId");

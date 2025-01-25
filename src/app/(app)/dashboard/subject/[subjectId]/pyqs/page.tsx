@@ -15,13 +15,15 @@ import AddPyqs from '@/components/AddPyqs';
 import PyqsNavbar from '@/components/Navbar/Pyqnavbar';
 import { PyqCard } from '@/components/card2/PyqCard';
 import Gsignin from '@/components/Gsignin';
+import { LoaderPinwheel } from 'lucide-react';
 
 const Page = () => {
   const [pyqs,setPyqs] = useState<PYQ[]>([]);
   const { data: session } = useSession();
   const [resultMessage, setResultMessage] = useState<JSX.Element | null>(null);
-  const [isSubjectLoading,setIsSubjectsLoading] = useState(true);
+  const [isPyqLoading,setIsPyqLoading] = useState(true);
   const [isPublic,setIsPublic] = useState(false);
+  const [loading,setIsLoading] = useState(true);
   const params = useParams();
   const subjectId = params?.subjectId;
 
@@ -33,20 +35,22 @@ const Page = () => {
       }
     } catch (error) {
       console.error("Failed to fetch subject status", error);
+    }finally{
+      setIsLoading(false);
     }
   };
 
   const {toast} = useToast();
   const refreshData = useCallback(async() => {
     try {
-      setIsSubjectsLoading(true);
+      setIsPyqLoading(true);
       const response = await axios.get<ApiResponse>(`/api/pyqs/get-pyq?subjectId=${subjectId}`)
 
       const fetchedPyqs = response.data.pyqs || []
       setPyqs(fetchedPyqs)
-      setIsSubjectsLoading(false);
+      setIsPyqLoading(false);
     } catch (error) {
-          setIsSubjectsLoading(false);
+          setIsPyqLoading(false);
           const axiosError = error as AxiosError<ApiResponse>;
           toast({
             title: "Error",
@@ -70,7 +74,10 @@ const Page = () => {
       <div className='w-full h-full flex justify-center items-center'>
         <div className='w-3/4 h-3/4 flex flex-wrap justify-center gap-4'>
         {
-          session?.user?.accessToken ? <></> : <>{isSubjectLoading?<></>:<Gsignin/>}</>
+          isPyqLoading&&(<LoaderPinwheel className='animate-spin text-white'/>)
+        }
+        {
+          !session?.user?.accessToken&&!isPublic&&!isPyqLoading&&(<Gsignin/>)
         }
         {
           pyqs.map((pyq)=>(
@@ -86,7 +93,7 @@ const Page = () => {
         </div>
         
       </div>
-      {!isPublic && (<div className='absolute top-16 right-4'><AddPyqs onAdd={refreshData}/></div>)}
+      {!isPublic && !loading && (<div className='absolute top-16 right-4'><AddPyqs onAdd={refreshData}/></div>)}
     </div>
   );
 };

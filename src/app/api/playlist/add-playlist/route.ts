@@ -103,7 +103,7 @@ export async function POST(req: Request) {
          
         try {
             const result = await VideoModel.insertMany(validVideos, { ordered: false });
-            console.log('Videos inserted successfully:', result.length);
+           
         } catch (error) {
             console.error('Internal server error in adding bulk videos', error);
         return new Response(

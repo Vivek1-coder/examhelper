@@ -7,6 +7,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { Playlist } from '@/model/Playlist.model';
 import { ApiResponse } from '@/types/ApiResponse';
 import { useToast } from '@/hooks/use-toast';
+
 import {
   Card,
   CardContent,
@@ -18,28 +19,39 @@ import {
 import Link from 'next/link';
 import { PlaylistCard } from '@/components/card2/PlaylistCard';
 import NavbarQues from '@/components/Navbar/Playlistnavbaar';
-import { Loader2 } from 'lucide-react';
+import { Loader2, LoaderPinwheel } from 'lucide-react';
 
 
 const PlaylistPage = () => {
   
   const [playlistData, setPlaylistData] = useState<Playlist[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setIsLoading] = useState(true);
+  const [fetching,setIsFetching] = useState(true);
+  const [isPublic,setIsPublic] = useState(false);
   const {toast} = useToast();
+  
   const params = useParams();
   const subjectId = params?.subjectId;
   const router = useRouter()
 
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setPlaylistLink(e.target.value);
-  //   setError(null); // Clear any previous errors
-  // };
+  const fetchStatus = async () => {
+    try {
+      const result = await axios.get<ApiResponse>(`/api/subject/get-status?subjectId=${subjectId}`);
+      if (result.data.message === "Public") {
+        setIsPublic(true);
+      }
+    } catch (error) {
+      console.error("Failed to fetch subject status", error);
+    }finally{
+      setIsFetching(false);
+    }
+  };
 
   const fetchAllPlaylists = useCallback(
     async(refresh:boolean = false)=>{
       try {
-        setLoading(true);
+        setIsLoading(true);
         const response = await axios.get<
         ApiResponse>(`/api/playlist/get-playlist?subjectId=${subjectId}`);
         setPlaylistData(response.data.playlists || [])
@@ -50,7 +62,7 @@ const PlaylistPage = () => {
             description:"Showing refreshed playlists"
           });
         }
-        setLoading(false)
+        setIsLoading(false)
       } catch (error) {
         const axiosError = error as AxiosError<ApiResponse>
         toast({
@@ -59,7 +71,7 @@ const PlaylistPage = () => {
           axiosError.response?.data.message || "Failed to fetch playlist",
         variant: "destructive",
         })
-        setLoading(false);
+        setIsLoading(false);
       }
 
     },[toast]
@@ -67,8 +79,9 @@ const PlaylistPage = () => {
 
 
   useEffect(()=>{
+    fetchStatus();
     fetchAllPlaylists();
-  },[fetchAllPlaylists,toast])
+  },[fetchAllPlaylists,toast,subjectId])
 
   
 
@@ -79,7 +92,7 @@ const PlaylistPage = () => {
        <NavbarQues/>
       </div>
       <div className='absolute top-24 right-11'>
-      <AddPlaylist subjectId={`${subjectId}`} onAdd={fetchAllPlaylists} />
+      {!isPublic && !fetching && (<AddPlaylist subjectId={`${subjectId}`} onAdd={fetchAllPlaylists}/>)}
       </div>
       <div className='flex flex-wrap justify-center p-10 mx-5 h-5/6 overflow-y-auto gap-6'>
 
@@ -97,7 +110,7 @@ const PlaylistPage = () => {
               />
             
           </div>
-        )) : loading ?<Loader2 className="animate-spin"/>:
+        )) : loading ?<LoaderPinwheel className="animate-spin"/>:
         <p>No playlists found.</p>
       }
       </div>
@@ -109,44 +122,3 @@ const PlaylistPage = () => {
 
 export default PlaylistPage;
 
-
-
-// <form onSubmit={handleSubmit}>
-//   <input
-//     type="text"
-//     value={playlistLink}
-//     onChange={handleInputChange}
-//     placeholder="Enter YouTube Playlist URL"
-   
-//     required
-//   />
-//   <button type="submit">Extract Playlist ID</button>
-// </form>
-// <h1>Playlist Videos</h1>
-// {playlistData && playlistData.items ? (
-//   <ul>
-//     {playlistData.items.map((item: any) => (
-
-//       <li key={item.id}>
-//         <a href={`https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`}>
-//         <p>{item.snippet.title}</p>
-//         <img src={item.snippet.thumbnails.default.url} alt="" />
-//         </a>
-//                 <iframe 
-//       width="560" 
-//       height="315" 
-//       src={`https://www.youtube.com/embed/${item.snippet.resourceId.videoId}`}
-//       title="YouTube video player" 
-      
-//       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-//       allowFullScreen
-
-// >
-// </iframe>
-        
-//       </li>
-//     ))}
-//   </ul>
-// ) : (
-//   <p>No data available</p>
-// )}

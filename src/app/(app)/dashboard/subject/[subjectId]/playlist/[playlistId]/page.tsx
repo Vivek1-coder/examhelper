@@ -6,7 +6,7 @@ import { useToast } from '@/hooks/use-toast'
 import { Video } from '@/model/Video.model'
 import { ApiResponse } from '@/types/ApiResponse'
 import axios, { AxiosError } from 'axios'
-import { Loader2 } from 'lucide-react'
+import { Loader2, LoaderPinwheel } from 'lucide-react'
 import { setLazyProp } from 'next/dist/server/api-utils'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
@@ -72,7 +72,7 @@ const page = () => {
               />
             </Link>
           </div>
-        )) : loading ?<Loader2 className="animate-spin"/>:
+        )) : loading ?<LoaderPinwheel className="animate-spin"/>:
         <p>No videos found.</p>
       }
 

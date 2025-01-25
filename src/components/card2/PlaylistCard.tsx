@@ -8,6 +8,7 @@ import { ApiResponse } from '@/types/ApiResponse';
 import { Trash2 } from 'lucide-react';
 import mongoose from 'mongoose';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 interface cardprops{
     thumbnail:string;
@@ -20,6 +21,8 @@ interface cardprops{
 
 export function PlaylistCard({thumbnail,title,nvideos,playlistId,subjectId,onDelete}:cardprops) {
   const { toast } = useToast();
+  const [isPublic,setIsPublic] = useState(false);
+    const [loading,setIsLoading] = useState(true);
 
   const handleDelete = async () => {
     try {
@@ -54,6 +57,22 @@ export function PlaylistCard({thumbnail,title,nvideos,playlistId,subjectId,onDel
     }
   };
   
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const result = await axios.get<ApiResponse>(`/api/subject/get-status?subjectId=${subjectId}`);
+        if (result.data.message === "Public") {
+          setIsPublic(true);
+        }
+      } catch (error) {
+        console.error("Failed to fetch subject status", error);
+      }finally{
+        setIsLoading(false)
+      }
+    };
+  
+    fetchStatus();
+  }, [subjectId]);
 
 
   return (
@@ -71,12 +90,12 @@ export function PlaylistCard({thumbnail,title,nvideos,playlistId,subjectId,onDel
         
         </div>
         </Link>
-        <button
+        {!isPublic &&!loading &&(<button
           onClick={handleDelete}
           className=" text-red-500 rounded-lg flex justify-center "
         >
           <Trash2 />
-        </button>
+        </button>)}
     </div> 
   );
 }

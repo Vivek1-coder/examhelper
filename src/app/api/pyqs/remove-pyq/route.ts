@@ -36,7 +36,7 @@ export async function DELETE(request:Request) {
             );
           }
     
-          const pyq= await PYQModel.findById(new mongoose.Types.ObjectId(pyqId));
+          const pyq= await PYQModel.findByIdAndDelete(new mongoose.Types.ObjectId(pyqId));
     
           if (!pyq) {
             console.error("Playlist not found for ID:", pyq);

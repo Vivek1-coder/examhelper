@@ -21,6 +21,7 @@ interface cardprops{
 export function PyqCard({id,title,content,subjectId,onDelete}:cardprops) {
   const { toast } = useToast();
   const [isPublic,setIsPublic] = useState(false);
+  const [loading,setIsLoading] = useState(true);
 
   const handleDelete = async () => {
     try {
@@ -57,6 +58,7 @@ export function PyqCard({id,title,content,subjectId,onDelete}:cardprops) {
   
   useEffect(() => {
     const fetchStatus = async () => {
+      
       try {
         const result = await axios.get<ApiResponse>(`/api/subject/get-status?subjectId=${subjectId}`);
         if (result.data.message === "Public") {
@@ -64,6 +66,8 @@ export function PyqCard({id,title,content,subjectId,onDelete}:cardprops) {
         }
       } catch (error) {
         console.error("Failed to fetch subject status", error);
+      }finally{
+        setIsLoading(false);
       }
     };
   
@@ -85,7 +89,7 @@ export function PyqCard({id,title,content,subjectId,onDelete}:cardprops) {
         
         </div>
        
-        {isPublic && (
+        {!isPublic && !loading && (
           <button
             onClick={handleDelete}
             className=" text-red-500 rounded-lg flex justify-center "

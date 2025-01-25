@@ -79,6 +79,7 @@ export const authOptions: NextAuthOptions = {
         token.isVerified = user.isVerified;
         token.image=user.image;
         token.username = user.username;
+        
       }
       if (account) {
         token.accessToken = account.access_token;

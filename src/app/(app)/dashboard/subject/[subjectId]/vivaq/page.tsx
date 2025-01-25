@@ -15,13 +15,15 @@ import { ApiResponse } from '@/types/ApiResponse';
 import Navbar from '@/components/Navbar/Navbar';
 import NavbarQues from '@/components/Navbar/Quesnavbar';
 import EditquesDialog from '@/components/EditquesDialog';
-import { FilePenLine, Loader2 } from 'lucide-react';
+import { FilePenLine, Loader2, LoaderPinwheel } from 'lucide-react';
 
 
 const page = () => {
     let [ques,setQues] = useState<Vivaq[]>([]);
     const [isEditOpen,setIsEditOpen] = useState(false);
     const [isQuesLoading,setIsQuesLoading] = useState(true)
+    const [loading,setIsLoading] = useState(true);
+    const [isPublic,setIsPublic] = useState(false);
 
    
     const handleEditClick = () => {
@@ -35,6 +37,19 @@ const page = () => {
     const {toast} = useToast();
     const params = useParams();
     const subjectId = params?.subjectId;
+
+    const fetchStatus = async () => {
+      try {
+        const result = await axios.get<ApiResponse>(`/api/subject/get-status?subjectId=${subjectId}`);
+        if (result.data.message === "Public") {
+          setIsPublic(true);
+        }
+      } catch (error) {
+        console.error("Failed to fetch subject status", error);
+      }finally{
+        setIsLoading(false);
+      }
+    };
 
     const fetchUserQuestions = useCallback(
       async (refresh: boolean = false) => {
@@ -65,8 +80,10 @@ const page = () => {
     );
 
     useEffect(()=>{
+      fetchStatus();
       fetchUserQuestions();
-    },[fetchUserQuestions])
+    },[fetchUserQuestions,subjectId])
+
   return (
 
     <div className='h-screen w-screen'>
@@ -74,7 +91,7 @@ const page = () => {
         <NavbarQues />
       </div>
       <div className='absolute top-20 right-3'>
-      <DialogComponentV subjectId={subjectId as string} onAdd={fetchUserQuestions}/>
+      {!isPublic &&!loading && <DialogComponentV subjectId={subjectId as string} onAdd={fetchUserQuestions}/>}
       </div>
       
       <div className='w-full h-full flex justify-center items-center p-10'>
@@ -89,31 +106,27 @@ const page = () => {
             {q.ques}
             </AccordionTrigger>
             <AccordionContent>
-              <input type="text" value={q.ans} readOnly />
-              <button onClick={handleEditClick} className=" text-blue-500 rounded-lg mb-2 w-1/2">
+              <p className='text-white'>{q.ans}</p>
+
+              {!isPublic && (<button onClick={handleEditClick} className=" text-blue-500 rounded-lg mb-2 w-1/2">
                 <FilePenLine/>
-              {
-                isEditOpen && (
+              {isEditOpen &&(
                   <EditquesDialog 
                 quesId={q._id as string}
                 initialQues={q.ques}
                 initialAns={q.ans}
                 onClose={handleEditClose}
                 onUpdate={handleEditClick}
-              />
-         
-                )
-              }
-              
-              </button>
+              /> ) }
+              </button>)}
             </AccordionContent>
           </AccordionItem>
           
         </Accordion>
       
           </div>
-        )) : isQuesLoading?<Loader2 className="animate-spin"/>:
-        <p>No subjects found.</p>}
+        )) : isQuesLoading?<LoaderPinwheel className="animate-spin text-white"/>:
+        <p className='text-white'>No Questions found.</p>}
         </div>
         </div>
 

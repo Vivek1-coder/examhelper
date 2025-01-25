@@ -11,13 +11,14 @@ import { useParams } from 'next/navigation';
 import { Notecard } from '@/components/card2/NoteCard';
 import NotesNavbar from '@/components/Navbar/Notesnavbar';
 import Gsignin from '@/components/Gsignin';
+import { LoaderPinwheel } from 'lucide-react';
 
 const Page = () => {
   const [notes,setNotes] = useState<Note[]>([]);
   const { data: session } = useSession();
   const [isPublic,setIsPublic] = useState(false);
-  const [resultMessage, setResultMessage] = useState<JSX.Element | null>(null);
-  const [isSubjectLoading,setIsSubjectsLoading] = useState(true);
+  const [loading,setIsLoading] = useState(true);
+  const [isNoteLoading,setIsNoteLoading] = useState(true);
   const {toast} = useToast();
   const params = useParams();
   const subjectId = params?.subjectId;
@@ -31,19 +32,21 @@ const Page = () => {
         }
       } catch (error) {
         console.error("Failed to fetch subject status", error);
+      }finally{
+        setIsLoading(false);
       }
     };
   
   const refreshData = useCallback(async() => {
     try {
-      setIsSubjectsLoading(true);
+      setIsNoteLoading(true);
       const response = await axios.get<ApiResponse>(`/api/notes/get-note?subjectId=${subjectId}`)
 
       const fetchedNotes = response.data.notes || []
       setNotes(fetchedNotes)
-      setIsSubjectsLoading(false);
+      setIsNoteLoading(false);
     } catch (error) {
-          setIsSubjectsLoading(false);
+          setIsNoteLoading(false);
           const axiosError = error as AxiosError<ApiResponse>;
           toast({
             title: "Error",
@@ -68,7 +71,10 @@ const Page = () => {
       <div className='w-full h-full flex justify-center items-center'>
         <div className='w-3/4 h-3/4 flex flex-wrap justify-center gap-4'>
         {
-          session?.user?.accessToken ? <></> : <>{isSubjectLoading?<></>:<Gsignin/>}</>
+          isNoteLoading&&(<LoaderPinwheel className='animate-spin text-white'/>)
+        }
+        {
+          !session?.user?.accessToken&&!isPublic&&!isNoteLoading&&(<Gsignin/>)
         }
         {
           notes.map((note)=>(
@@ -84,7 +90,7 @@ const Page = () => {
         </div>
         
       </div>
-      {!isPublic && (<div className='absolute top-16 right-4'><AddNotes onAdd={refreshData}/></div>)}
+      {!isPublic && !loading &&(<div className='absolute top-16 right-4'><AddNotes onAdd={refreshData}/></div>)}
       
     </div>
   );

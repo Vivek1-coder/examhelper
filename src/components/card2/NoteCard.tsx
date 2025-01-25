@@ -21,6 +21,8 @@ interface cardprops{
 export function Notecard({id,title,content,subjectId,onDelete}:cardprops) {
   const { toast } = useToast();
   const [isPublic,setIsPublic] = useState(false);
+  const [loading,setIsLoading] = useState(true);
+
   const handleDelete = async () => {
     try {
       const confirmed = window.confirm(
@@ -63,6 +65,8 @@ export function Notecard({id,title,content,subjectId,onDelete}:cardprops) {
         }
       } catch (error) {
         console.error("Failed to fetch subject status", error);
+      }finally{
+        setIsLoading(false)
       }
     };
   
@@ -70,21 +74,21 @@ export function Notecard({id,title,content,subjectId,onDelete}:cardprops) {
   }, [subjectId]);
 
   return (
-    <div className='h-16 w-52 flex items-center justify-between px-2 rounded-2xl gap-2 card border  text-white' >
+    <div className='h-16 w-72 flex items-center justify-between px-2 rounded-2xl gap-2 card border  text-white' >
   
       {<a href={`http://drive.google.com/file/d/${content}/view`} target='_blank' >
         <button className='text-blue-500 flex justify-center'>
             <View/>
         </button>
         </a>}
-        <div className='flex flex-col justify-center w-1/2 h-24 text-center'>
+        <div className='flex flex-col justify-center w-1/2 h-24 text-center overflow-y-auto '>
         
-        <p className='font-bold text-xl overflow-y-auto '>{title}</p>
+        <p className='font-bold text-xl w-full overflow-hidden'>{title}</p>
        
         
         </div>
        
-        {!isPublic && (<button
+        {!isPublic &&!loading && (<button
           onClick={handleDelete}
           className=" text-red-500 rounded-lg flex justify-center "
         >
