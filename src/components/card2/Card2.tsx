@@ -6,8 +6,8 @@ import { useToast } from "@/hooks/use-toast";
 import { DeleteIcon, FilePenLine, Star, Trash2 } from "lucide-react";
 import "./card2.css"
 import { useState } from "react";
-import DialogComponent from "../Dialog";
-import DialogComponentEdit from "../EditDialog";
+import DialogComponent from "../Add/Dialog";
+import DialogComponentEdit from "../Edit/EditDialog";
 interface CardProps {
   subjectName: string;
   subjectId: string;

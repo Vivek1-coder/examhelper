@@ -1,10 +1,8 @@
 'use client';
 import Link from 'next/link';
-import Home from '../../../public/Exambuddy.png'
 import './Navbar.css';
 import { useState, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 
 
@@ -25,7 +23,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="header flex items-center justify-between px-16 py-2  md:text-white bg-gradient-to-r from-black to-gray-100">
+    <header className="header flex items-center justify-between px-16 py-2  md:text-white bg-gradient-to-r from-slate-950 to-slate-400">
       <Link href="/dashboard">
       <Avatar className=' text-black'>
         <AvatarFallback>XB</AvatarFallback>
@@ -45,7 +43,7 @@ const Navbar = () => {
           href="/dashboard/subject"
           className={`${
             isSmallScreen ? '' : 'nav-link'
-          } text-white md:text-black hover:text-white text-center`}
+          } text-white md:text-white hover:text-purple-400 text-center`}
         >
           Subjects
         </Link>
@@ -53,7 +51,7 @@ const Navbar = () => {
           href="#"
           className={`${
             isSmallScreen ? '' : 'nav-link'
-          } text-white md:text-black hover:text-white text-center`}
+          } text-white md:text-white hover:text-purple-400 text-center`}
         >
           Followers
         </Link>
@@ -61,7 +59,7 @@ const Navbar = () => {
           href="#"
           className={`${
             isSmallScreen ? '' : 'nav-link'
-          } text-white md:text-black hover:text-white text-center`}
+          } text-white md:text-white hover:text-purple-400 text-center`}
         >
           Notifications
         </Link>
@@ -69,7 +67,7 @@ const Navbar = () => {
           href="#"
           className={`${
             isSmallScreen ? '' : 'nav-link'
-          } text-white md:text-black hover:text-white text-center`}
+          } text-white md:text-white hover:text-purple-400 text-center`}
         >
           Groups
         </Link>

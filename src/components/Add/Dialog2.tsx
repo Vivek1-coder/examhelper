@@ -9,20 +9,26 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { useSession } from "next-auth/react";
-import { useToast } from "@/hooks/use-toast";
-import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
+import axios, { AxiosError } from "axios";
+import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { FolderPlus } from "lucide-react";
+import { ListPlus } from "lucide-react";
 
-const DialogComponent = ({ onAdd }: { onAdd: () => void }) => {
-  const [name, setName] = useState("");
-  const [isPublic, setIsPublic] = useState(true);
+const DialogComponentV = ({
+  subjectId,
+  onAdd,
+}: {
+  subjectId: string;
+  onAdd: () => void;
+}) => {
+  const [ques, setQues] = useState("");
+  const [ans, setAns] = useState("");
   const { data: session } = useSession();
+
   const { toast } = useToast();
   const router = useRouter();
   const [isCreating, setIsCreating] = useState(false);
@@ -30,30 +36,29 @@ const DialogComponent = ({ onAdd }: { onAdd: () => void }) => {
   const handleSubmit = async () => {
     setIsCreating(true);
     try {
-      const response = await axios.post<ApiResponse>("/api/subject/add-subject", {
-        name,
-        isPublic,
-      });
+      const response = await axios.post<ApiResponse>(
+        "/api/vivaques/add-vivaques",
+        {
+          name: ques,
+          content: ans,
+          subjectId,
+        }
+      );
 
       toast({
         title: "Success",
         description: response.data.message,
       });
 
-      onAdd(); // Trigger a refresh after adding the subject
-
-      // Optionally close the dialog or reset the form
-      setName(""); // Reset the name field
-      setIsPublic(true); // Reset the public switch to default
-
+      onAdd();
     } catch (error) {
       console.error("Error during adding subject:", error);
 
       const axiosError = error as AxiosError<ApiResponse>;
 
       // Default error message
-      const errorMessage =
-        axiosError.response?.data.message || "There was a problem adding the subject. Please try again.";
+      let errorMessage = axiosError.response?.data.message;
+      ("There was a problem in adding a new subject. Please try again.");
 
       toast({
         title: "Subject not added",
@@ -65,46 +70,52 @@ const DialogComponent = ({ onAdd }: { onAdd: () => void }) => {
     }
   };
 
-  const handleSwitchChange = () => {
-    setIsPublic(!isPublic);
-  };
-
   return (
     <div className="m-2">
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline" className="rounded-full h-16 w-16 text-green-600 bg-gray-300" >
-            <FolderPlus style={{ height: "40px", width: "40px", color: "green" }}/>
+          <Button variant="outline" className="rounded-full text-blue-600">
+            <ListPlus />
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add Subject</DialogTitle>
-            <DialogDescription>Add a new subject you want to add.</DialogDescription>
+            <DialogTitle>Add Question</DialogTitle>
+            <DialogDescription>
+              Add important question and answer..
+            </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
+              <Label htmlFor="ques" className="text-right">
+                Question
               </Label>
-              <Input
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+              <Textarea
+                id="ques"
+                value={ques}
+                onChange={(e) => {
+                  setQues(e.target.value);
+                }}
                 className="col-span-3"
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="isPublic" className="text-right">
-                {isPublic ? "Public" : "Private"}
+              <Label htmlFor="ans" className="text-right">
+                Answer
               </Label>
-              <div className="mb-4">
-                <Switch checked={isPublic} onCheckedChange={handleSwitchChange} />
-              </div>
+              <Textarea
+                id="ans"
+                value={ans}
+                onChange={(e) => {
+                  setAns(e.target.value);
+                }}
+                className="col-span-3"
+              />
             </div>
           </div>
+
           <DialogFooter>
-            <Button type="submit" onClick={handleSubmit} disabled={isCreating}>
+            <Button type="submit" onClick={handleSubmit}>
               {isCreating ? "Adding..." : "Add"}
             </Button>
           </DialogFooter>
@@ -114,4 +125,4 @@ const DialogComponent = ({ onAdd }: { onAdd: () => void }) => {
   );
 };
 
-export default DialogComponent;
+export default DialogComponentV;

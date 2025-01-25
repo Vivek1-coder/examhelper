@@ -1,3 +1,4 @@
+'use client'
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,41 +12,37 @@ import {
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
-import { useRouter } from "next/navigation";
-import { FolderPlus } from "lucide-react";
 
-const DialogComponentEdit = ({
-    subjectId,
-    initialName = "",
-    initialIsPublic = true,
+const EditquesDialog = ({
+    quesId,
+    initialQues = "",
+    initialAns = "",
     onClose,
     onUpdate,
   }: {
-    subjectId?: string;
-    initialName?: string;
-    initialIsPublic?: boolean;
+    quesId?: string;
+    initialQues?: string;
+    initialAns?: string;
     onClose: () => void;
     onUpdate: () => void ;
   }) => {
-    const [name, setName] = useState(initialName);
-    const [isPublic, setIsPublic] = useState(initialIsPublic);
+    const [ques, setQues] = useState(initialQues);
+    const [ans, setAns] = useState(initialAns);
     const { toast } = useToast();
     const [isSaving, setIsSaving] = useState(false);
   
     const handleSubmit = async () => {
       setIsSaving(true);
       try {
-        const url = subjectId
-          ? `/api/subject/edit-subject?subjectId=${subjectId}` // Update endpoint
-          : `/api/subject/add-subject`; // Add endpoint
+        const url = quesId
+          ? `/api/vivaques/edit-vivaques?quesId=${quesId}` // Update endpoint
+          : `/api/vivaques/add-vivaques`; // Add endpoint
   
-        const method = subjectId ? "put" : "post";
-        const payload = { name, isPublic };
+        const method = quesId ? "put" : "post";
+        const payload = { ques, ans };
   
         const response = await axios[method](url, payload);
   
@@ -70,17 +67,14 @@ const DialogComponentEdit = ({
       }
     };
   
-    const handleSwitchChange = () => {
-      setIsPublic(!isPublic);
-    };
   
     return (
       <Dialog open={true} onOpenChange={onClose}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>{subjectId ? "Edit Subject" : "Add Subject"}</DialogTitle>
+            <DialogTitle>{quesId ? "Edit Subject" : "Add Subject"}</DialogTitle>
             <DialogDescription>
-              {subjectId
+              {quesId
                 ? "Update the subject details below."
                 : "Add a new subject."}
             </DialogDescription>
@@ -88,24 +82,27 @@ const DialogComponentEdit = ({
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="name" className="text-right">
-                Name
+                Ques
               </Label>
               <Input
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                id="ques"
+                value={ques}
+                onChange={(e) => setQues(e.target.value)}
                 className="col-span-3"
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="isPublic" className="text-right">
-                {isPublic ? "Public" : "Private"}
+              <Label htmlFor="name" className="text-right">
+                Ans
               </Label>
-              <div className="mb-4">
-                <Switch checked={isPublic} onCheckedChange={handleSwitchChange} />
-              </div>
+              <Input
+                id="ans"
+                value={ans}
+                onChange={(e) => setAns(e.target.value)}
+                className="col-span-3"
+              />
             </div>
-          </div>
+            </div> 
           <DialogFooter>
             <Button type="submit" onClick={handleSubmit} disabled={isSaving}>
               {isSaving ? "Saving..." : "Save"}
@@ -116,5 +113,5 @@ const DialogComponentEdit = ({
     );
   };
   
-  export default DialogComponentEdit;
+  export default EditquesDialog;
   

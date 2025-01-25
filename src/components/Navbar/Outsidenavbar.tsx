@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import './Navbar.css';
 import { useState, useEffect } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Loader } from 'lucide-react';
 
 const NavbarHome = () => {

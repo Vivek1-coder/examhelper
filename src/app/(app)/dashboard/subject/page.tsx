@@ -1,12 +1,11 @@
 "use client";
 
-import DialogComponent from "@/components/Dialog";
+import DialogComponent from "@/components/Add/Dialog";
 import { useCallback, useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
 import { useToast } from "@/hooks/use-toast";
 import { Subject } from "@/model/Subject.model";
-import { useRouter } from "next/navigation";
 import CardComponent from "@/components/card2/Card2";
 import Navbar from "@/components/Navbar/Navbar2";
 import { Label } from "@/components/ui/label";
@@ -18,8 +17,7 @@ const Subjectpage = () => {
   const [allSubjects, setAllSubjects] = useState<Subject[]>([]);
   const [isAllSubjects, setIsAllSubjects] = useState(false);
   const { toast } = useToast();
-  const router = useRouter();
-  const [isSubjectLoading,setIsSubjectsLoading] = useState(true);
+  const [isSubjectLoading, setIsSubjectsLoading] = useState(true);
 
   const refreshData = useCallback(async () => {
     try {
@@ -29,11 +27,10 @@ const Subjectpage = () => {
         : await axios.get<ApiResponse>("/api/subject/get-user-subjects");
 
       const fetchedSubjects = response.data.subjects || [];
-      isAllSubjects ? setAllSubjects(fetchedSubjects) : 
-      
-      setSubjects(fetchedSubjects);
+      isAllSubjects
+        ? setAllSubjects(fetchedSubjects)
+        : setSubjects(fetchedSubjects);
       setIsSubjectsLoading(false);
-
     } catch (error) {
       setIsSubjectsLoading(false);
       const axiosError = error as AxiosError<ApiResponse>;
@@ -63,7 +60,6 @@ const Subjectpage = () => {
 
         <div className="w-full flex flex-col justify-center items-center h-full">
           <div className="flex w-4/5 h-3/4 justify-center rounded-3xl p-3 overflow-y-auto">
-
             {isAllSubjects ? (
               <div
                 className="flex flex-wrap text-white rounded-lg justify-center gap-8"
@@ -82,8 +78,9 @@ const Subjectpage = () => {
                       onDelete={refreshData} // Trigger refresh after deletion
                     />
                   ))
+                ) : isSubjectLoading ? (
+                  <Loader2 className="animate-spin text-white" />
                 ) : (
-                  isSubjectLoading?<Loader2 className="animate-spin text-white"/>:
                   <p>No subjects found.</p>
                 )}
               </div>
@@ -107,21 +104,26 @@ const Subjectpage = () => {
                       />
                     ))}
                   </div>
+                ) : isSubjectLoading ? (
+                  <Loader2 className="animate-spin text-white" />
                 ) : (
-                  isSubjectLoading?<Loader2 className="animate-spin text-white"/>:
                   <p>No subjects found.</p>
                 )}
               </div>
             )}
 
             <div className="absolute top-20 right-3">
-              <DialogComponent onAdd={refreshData} /> {/* Trigger refresh after adding */}
+              <DialogComponent onAdd={refreshData} />{" "}
+              {/* Trigger refresh after adding */}
             </div>
           </div>
 
           <div className="grid grid-cols-2 items-center gap-2 mt-4 text-white">
             <p>Want to see all public subjects:</p>
-            <Switch checked={isAllSubjects} onCheckedChange={handleCheckboxChange} />
+            <Switch
+              checked={isAllSubjects}
+              onCheckedChange={handleCheckboxChange}
+            />
             <Label htmlFor="isPublic" className="text-right">
               ({isAllSubjects ? "All Public" : "Your"})
             </Label>
