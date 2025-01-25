@@ -22,7 +22,7 @@ export async function POST(request:Request) {
         }
 
         const userId = new mongoose.Types.ObjectId(user._id);
-        const authorName = user.username;
+        const authorName = user.name || user.username;
         try{
             const newSubject = new SubjectModel({
                 name,

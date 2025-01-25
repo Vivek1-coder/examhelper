@@ -19,7 +19,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Loader2, SquarePlus } from "lucide-react";
 import { ApiResponse } from "@/types/ApiResponse";
 
-const AddNotes = () => {
+const AddNotes = ({ onAdd }: { onAdd: () => void }) => {
   const [name, setName] = useState("");
   const [notefile, setNoteFile] = useState<File | null>(null);
   const { data: session } = useSession();
@@ -85,6 +85,7 @@ const AddNotes = () => {
               Uploaded Successfully
             </p>
           );
+          onAdd()
         } else {
           const errorData = await response.json();
           console.error('Error uploading file:', errorData);

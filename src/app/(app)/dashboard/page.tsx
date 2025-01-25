@@ -20,8 +20,9 @@ const Dashboard = () => {
       
         <div className='flex justify-center items-center'>
       <div className=" w-1/2 flex justify-center">
+      
       <div className='w-3/4 rounded-xl ml-6 text-center p-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'>
-      <p className='text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-white to-green-500'>Welcome {session?.user.name} !!!</p>
+      <p className='text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-white to-green-500'>Welcome {session?.user.name || session?.user.username} {session?.user._id} !!!</p>
       <br/>
       <p className="text-xl font-medium tracking-wide">
         Take charge of your studies with ease!

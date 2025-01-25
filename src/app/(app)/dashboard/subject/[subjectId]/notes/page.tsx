@@ -10,18 +10,30 @@ import { useToast } from '@/hooks/use-toast';
 import { useParams } from 'next/navigation';
 import { Notecard } from '@/components/card2/NoteCard';
 import NotesNavbar from '@/components/Navbar/Notesnavbar';
+import Gsignin from '@/components/Gsignin';
 
 const Page = () => {
   const [notes,setNotes] = useState<Note[]>([]);
   const { data: session } = useSession();
+  const [isPublic,setIsPublic] = useState(false);
   const [resultMessage, setResultMessage] = useState<JSX.Element | null>(null);
   const [isSubjectLoading,setIsSubjectsLoading] = useState(true);
-
+  const {toast} = useToast();
   const params = useParams();
   const subjectId = params?.subjectId;
 
-
-  const {toast} = useToast();
+  
+  const fetchStatus = async () => {
+      try {
+        const result = await axios.get<ApiResponse>(`/api/subject/get-status?subjectId=${subjectId}`);
+        if (result.data.message === "Public") {
+          setIsPublic(true);
+        }
+      } catch (error) {
+        console.error("Failed to fetch subject status", error);
+      }
+    };
+  
   const refreshData = useCallback(async() => {
     try {
       setIsSubjectsLoading(true);
@@ -43,8 +55,10 @@ const Page = () => {
       }, [toast]);
 
   useEffect(() => {
-          refreshData();
-        }, [refreshData]);
+    fetchStatus();
+    refreshData();
+          
+      }, [refreshData,subjectId]);
       
   return (
     <div className='w-screen h-screen relative'>
@@ -53,6 +67,9 @@ const Page = () => {
       </div>
       <div className='w-full h-full flex justify-center items-center'>
         <div className='w-3/4 h-3/4 flex flex-wrap justify-center gap-4'>
+        {
+          session?.user?.accessToken ? <></> : <>{isSubjectLoading?<></>:<Gsignin/>}</>
+        }
         {
           notes.map((note)=>(
             <Notecard key={note._id as string} 
@@ -67,7 +84,8 @@ const Page = () => {
         </div>
         
       </div>
-      <div className='absolute top-16 right-4'><AddNotes/></div>
+      {!isPublic && (<div className='absolute top-16 right-4'><AddNotes onAdd={refreshData}/></div>)}
+      
     </div>
   );
 };

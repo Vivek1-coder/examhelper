@@ -14,16 +14,27 @@ import { PYQ } from '@/model/PYQ.model';
 import AddPyqs from '@/components/AddPyqs';
 import PyqsNavbar from '@/components/Navbar/Pyqnavbar';
 import { PyqCard } from '@/components/card2/PyqCard';
+import Gsignin from '@/components/Gsignin';
 
 const Page = () => {
   const [pyqs,setPyqs] = useState<PYQ[]>([]);
   const { data: session } = useSession();
   const [resultMessage, setResultMessage] = useState<JSX.Element | null>(null);
   const [isSubjectLoading,setIsSubjectsLoading] = useState(true);
-
+  const [isPublic,setIsPublic] = useState(false);
   const params = useParams();
   const subjectId = params?.subjectId;
 
+  const fetchStatus = async () => {
+    try {
+      const result = await axios.get<ApiResponse>(`/api/subject/get-status?subjectId=${subjectId}`);
+      if (result.data.message === "Public") {
+        setIsPublic(true);
+      }
+    } catch (error) {
+      console.error("Failed to fetch subject status", error);
+    }
+  };
 
   const {toast} = useToast();
   const refreshData = useCallback(async() => {
@@ -46,9 +57,10 @@ const Page = () => {
         }
       }, [toast]);
 
-  useEffect(() => {
-          refreshData();
-        }, [refreshData]);
+ useEffect(() => {
+     fetchStatus();
+     refreshData();
+   }, [refreshData,subjectId]);
       
   return (
     <div className='w-screen h-screen relative'>
@@ -57,6 +69,9 @@ const Page = () => {
       </div>
       <div className='w-full h-full flex justify-center items-center'>
         <div className='w-3/4 h-3/4 flex flex-wrap justify-center gap-4'>
+        {
+          session?.user?.accessToken ? <></> : <>{isSubjectLoading?<></>:<Gsignin/>}</>
+        }
         {
           pyqs.map((pyq)=>(
             <PyqCard key={pyq._id as string} 
@@ -71,7 +86,7 @@ const Page = () => {
         </div>
         
       </div>
-      <div className='absolute top-16 right-4'><AddPyqs/></div>
+      {!isPublic && (<div className='absolute top-16 right-4'><AddPyqs onAdd={refreshData}/></div>)}
     </div>
   );
 };

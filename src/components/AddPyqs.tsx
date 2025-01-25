@@ -19,7 +19,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Loader2, SquarePlus } from "lucide-react";
 import { ApiResponse } from "@/types/ApiResponse";
 
-const AddPyqs = () => {
+const AddPyqs = ({ onAdd }: { onAdd: () => void }) => {
     const [name, setName] = useState("");
     const [semester, setSemester] = useState(1);
     const [year, setYear] = useState(2015);

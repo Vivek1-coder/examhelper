@@ -8,6 +8,7 @@ import { ApiResponse } from '@/types/ApiResponse';
 import { Trash2, View } from 'lucide-react';
 import mongoose from 'mongoose';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 interface cardprops{
     id:string;
@@ -19,6 +20,7 @@ interface cardprops{
 
 export function PyqCard({id,title,content,subjectId,onDelete}:cardprops) {
   const { toast } = useToast();
+  const [isPublic,setIsPublic] = useState(false);
 
   const handleDelete = async () => {
     try {
@@ -53,7 +55,20 @@ export function PyqCard({id,title,content,subjectId,onDelete}:cardprops) {
     }
   };
   
-
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const result = await axios.get<ApiResponse>(`/api/subject/get-status?subjectId=${subjectId}`);
+        if (result.data.message === "Public") {
+          setIsPublic(true);
+        }
+      } catch (error) {
+        console.error("Failed to fetch subject status", error);
+      }
+    };
+  
+    fetchStatus();
+  }, [subjectId]);
 
   return (
     <div className='h-16 w-52 flex items-center justify-between px-2 rounded-2xl gap-2 card border  text-white' >
@@ -70,12 +85,14 @@ export function PyqCard({id,title,content,subjectId,onDelete}:cardprops) {
         
         </div>
        
-        <button
-          onClick={handleDelete}
-          className=" text-red-500 rounded-lg flex justify-center "
-        >
-          <Trash2 />
-        </button>
+        {isPublic && (
+          <button
+            onClick={handleDelete}
+            className=" text-red-500 rounded-lg flex justify-center "
+          >
+            <Trash2 />
+          </button>
+        )}
     </div> 
   );
 }

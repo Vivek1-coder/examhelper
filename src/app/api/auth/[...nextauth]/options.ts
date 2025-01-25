@@ -50,11 +50,13 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async profile(profile) {
+       
         await dbConnect();
 
         const user = await UserModel.findOne({ email: profile.email });
         if (user) {
-          // If user exists, return the user object with the correct field
+          // If user exists, return the user object with the correct fields
+          
           return {
             id: user._id ? user._id.toString() : "",
             name: user.username || profile.name,
