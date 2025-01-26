@@ -5,26 +5,29 @@ import Homelogo from "../../public/Exambuddy.png";
 
 export default function Home() {
   return (
-    <div className="relative w-screen h-screen">
-      <div className="absolute top-0 w-full ">
+    <div className="relative w-screen h-full">
+      <div className="absolute top-0 w-full">
         <Navbar />
       </div>
-
-      <div className="flex justify-center items-center">
-        <div className=" w-1/2 flex justify-center">
-          <div className="w-3/4 rounded-xl ml-6 text-center p-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg">
+      <Image src={Homelogo} alt="Home" className="md:hidden " />
+      <div className="flex justify-center items-center w-full max-md:h-5/6 h-full max-md:bg-black">
+        <div className=" w-full  lg:ml-6 md:w-1/2 flex justify-center">
+          <div className="w-full  rounded-xl text-center md:p-5 lg:p-10 md:bg-gray-900  text-white shadow-lg">
             <p className="text-xl font-medium tracking-wide">
               Take charge of your studies with ease!
             </p>
-            <h1 className="text-5xl font-extrabold mt-4">
+            <br />
+            <h1 className="text-5xl md:text-8xl font-extrabold mt-4 w-full">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-pink-500">
                 XAM BUDDY
               </span>
             </h1>
+            <br />
             <p className="mt-4 text-lg">
               Your ultimate companion to make preparation
             </p>
-            <div className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-red-50 to-red-500 ">
+           
+            <div className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-200 w-full">
               <Typewriter
                 words={[
                   "Structured",
@@ -37,7 +40,7 @@ export default function Home() {
           </div>
         </div>
 
-        <Image src={Homelogo} alt="Home" className="w-1/2 h-screen" />
+        <Image src={Homelogo} alt="Home" className="max-md:hidden md:w-1/2 h-screen" />
       </div>
     </div>
   );

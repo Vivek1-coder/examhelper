@@ -29,12 +29,15 @@ export default function RootLayout({
     <html lang="en">
       <AuthProvider>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black relative `}
         >
           {children}
           <Toaster />
 
-          <Footer />
+          <footer >
+          <Footer/>
+          </footer>
+          
         </body>
       </AuthProvider>
     </html>

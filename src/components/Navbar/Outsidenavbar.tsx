@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import './Navbar.css';
+
 import { useState, useEffect } from 'react';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Loader } from 'lucide-react';
@@ -24,27 +25,25 @@ const NavbarHome = () => {
   }, []);
 
   return (
-    <header className="header flex items-center justify-between px-16 py-2  md:text-white  bg-gradient-to-r from-black to-gray-100">
+    <header className="header w-full flex items-center justify-between px-8 md:px-16 py-2 text-white bg-opacity-10  bg-gradient-to-r from-transparent to-gray-200">
       <div className='flex gap-3 items-center'>
-      <Link href="/dashboard">
-        <Avatar className=" text-black">
-          <AvatarFallback>XB</AvatarFallback>
+        <Avatar className=" text-white ">
+          <AvatarFallback className='bg-black'>XB</AvatarFallback>
         </Avatar>
-      </Link>
-      <p className='bg-clip-text text-transparent font-extrabold bg-gradient-to-r from-blue-400 to-violet-800'>Xam Buddy</p>
+      <p className='bg-clip-text text-transparent font-extrabold bg-gradient-to-r from-yellow-300 to-pink-500 max-sm:hidden'>XAM BUDDY</p>
       </div>
         
       
-      <nav className='flex gap-6'>
+      <nav className='flex gap-3 md:gap-6'>
         <Link
           href="/sign-up"
         >
-        <button className='btn bg-blue-500 p-2 rounded-lg w-20 flex justify-center items-center' onClick={()=>{setIsLoading(true)}}>{loading?<Loader className="animate-spin"/>:"Sign Up"}</button>
+        <button className='btn bg-black p-2 rounded-lg w-20 flex justify-center items-center hover:scale-105 hover:bg-gray-900' onClick={()=>{setIsLoading(true)}}>{loading?<Loader className="animate-spin"/>:"Sign Up"}</button>
         </Link>
         <Link
           href="/sign-in"
         >
-          <button className='btn bg-blue-500 p-2 rounded-lg w-20 flex justify-center items-center' onClick={()=>{setIsLoading2(true)}}>{loading2?<Loader className="animate-spin"/>:"Sign In"}</button>
+          <button className='btn bg-black p-2 rounded-lg w-20 flex justify-center items-center hover:scale-105 hover:bg-gray-900' onClick={()=>{setIsLoading2(true)}}>{loading2?<Loader className="animate-spin"/>:"Sign In"}</button>
         </Link>
         
       </nav>
