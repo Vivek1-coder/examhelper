@@ -21,7 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function signUpForm() {
@@ -110,13 +110,16 @@ export default function signUpForm() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-800">
-      <div className="w-full max-w-xl p-8 space-y-8 bg-white rounded-lg shadow-md">
+    <div className="flex justify-center items-center min-h-screen bg-black text-white">
+      <div className="w-full max-w-xl p-3 space-y-8  bg-transparent  rounded-lg shadow-md shadow-white">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
+          <Link href={`/`}>
+          <ArrowLeft className="text-white hover:scale-125"/>
+          </Link>
+          <h1 className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-pink-500 text-4xl font-extrabold">
             XAM BUDDY
           </h1>
-          <p className="mb-4">Structure your online study preparation</p>
+          <p className="mb-3">Structure your online study preparation</p>
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -158,8 +161,8 @@ export default function signUpForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <Input {...field} name="email" />
-                  <p className="text-muted text-blue-400 text-sm">
-                    We will send you a verification code
+                  <p className="text-muted text-gray-600 text-sm">
+                    *We will send you a verification code
                   </p>
                   <FormMessage />
                 </FormItem>
@@ -177,7 +180,7 @@ export default function signUpForm() {
         name="college"
         onChange={(e) => field.onChange(e.target.value)}
         value={field.value || ""}
-        className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        className="border border-gray-300 w-full bg-black rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       >
         <option value="" disabled>
           Select your college
@@ -205,7 +208,7 @@ export default function signUpForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <Button type="submit" className="w-full bg-green-600 hover:bg-green-800 hover:scale-y-105 " disabled={isSubmitting}>
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
