@@ -90,13 +90,14 @@ export async function DELETE(request: Request) {
       }),
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error in DELETE operation:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return new Response(
       JSON.stringify({
         success: false,
         message: "An error occurred while processing the request.",
-        error: error.message,
+        error: errorMessage,
       }),
       { status: 500 }
     );

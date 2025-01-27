@@ -8,6 +8,21 @@ import mongoose from 'mongoose';
 
 const YOUTUBE_PLAYLIST_ITEMS_API = 'https://www.googleapis.com/youtube/v3/playlistItems';
 
+type YouTubePlaylistItem = {
+  snippet: {
+    title: string;
+    thumbnails: {
+      default: {
+        url: string;
+      };
+    };
+    resourceId: {
+      videoId: string;
+    };
+    videoOwnerChannelTitle: string;
+  };
+};
+
 export async function POST(req: Request) {
   await dbConnect();
 
@@ -15,23 +30,21 @@ export async function POST(req: Request) {
     const { searchParams } = new URL(req.url);
     const playlistId = searchParams.get("playlistId");
     const subjectId = searchParams.get("subjectId");
-    
-
     const { name } = await req.json();
-    const session = await getServerSession(authOptions)
-        const user:User = session?.user as User
+    const session = await getServerSession(authOptions);
+    const user: User = session?.user as User;
 
-        if(!session || !session.user){
-            return Response.json(
-                {
-                    success : false,
-                    message:"Not Authentication"
-                },
-                { status : 401 }
-            )
-        }
+    if (!session || !session.user) {
+      return Response.json(
+        {
+          success: false,
+          message: "Not Authentication"
+        },
+        { status: 401 }
+      );
+    }
 
-        const userId = new mongoose.Types.ObjectId(user._id);
+    const userId = new mongoose.Types.ObjectId(user._id);
 
     if (!process.env.YOUTUBE_API) {
       return new Response(
@@ -39,14 +52,14 @@ export async function POST(req: Request) {
         { status: 500 }
       );
     }
+
     if (!playlistId || !subjectId || !name) {
-        console.error('Missing parameters', { playlistId, subjectId, name });
-        return new Response(
-          JSON.stringify({ success: false, message: "Missing required parameters" }),
-          { status: 400 }
-        );
-      }
-    
+      console.error('Missing parameters', { playlistId, subjectId, name });
+      return new Response(
+        JSON.stringify({ success: false, message: "Missing required parameters" }),
+        { status: 400 }
+      );
+    }
 
     const response = await fetch(
       `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&playlistId=${playlistId}&maxResults=50&key=${process.env.YOUTUBE_API}`
@@ -79,50 +92,34 @@ export async function POST(req: Request) {
     await newPlaylist.save();
 
     try {
-        const videos = items.map((item: any) => ({
-            thumbnail: item?.snippet?.thumbnails?.default?.url || '',
-            title: item?.snippet?.title || 'Untitled',
-            videoId: item?.snippet?.resourceId?.videoId || '',
-            playlistId:newPlaylist._id,
-            subjectId,
-            userId,
-            author: item?.snippet?.videoOwnerChannelTitle || 'Unknown',
-          }));
-        
-          // Filter out invalid videos (e.g., missing videoId or title)
-          const validVideos = videos.filter((video: { videoId: string; title: string }) => video.videoId && video.title);
-        
-          if (validVideos.length === 0) {
-            throw new Error('No valid videos to insert');
-          }
-        
-          // Insert videos in bulk
-          
-        
-          // Log the result of the bulk operation
-         
-        try {
-            await VideoModel.insertMany(validVideos, { ordered: false });
-           
-        } catch (error) {
-            console.error('Internal server error in adding bulk videos', error);
-        return new Response(
-        JSON.stringify({
-            success: false,
-            message: 'Internal server error in adding bulk videos',
-      }),
-      { status: 500 }
-    );
-        }
+      const videos = items.map((item: YouTubePlaylistItem) => ({
+        thumbnail: item?.snippet?.thumbnails?.default?.url || '',
+        title: item?.snippet?.title || 'Untitled',
+        videoId: item?.snippet?.resourceId?.videoId || '',
+        playlistId: newPlaylist._id,
+        subjectId,
+        userId,
+        author: item?.snippet?.videoOwnerChannelTitle || 'Unknown',
+      }));
+
+      // Filter out invalid videos (e.g., missing videoId or title)
+      const validVideos = videos.filter((video: { videoId: string; title: string }) => video.videoId && video.title);
+
+      if (validVideos.length === 0) {
+        throw new Error('No valid videos to insert');
+      }
+
+      await VideoModel.insertMany(validVideos, { ordered: false });
+
     } catch (error) {
-        console.error('Internal server error in adding videos', error);
-        return new Response(
+      console.error('Internal server error in adding videos', error);
+      return new Response(
         JSON.stringify({
-            success: false,
-            message: 'Internal server error in adding videos',
-      }),
-      { status: 500 }
-    );
+          success: false,
+          message: 'Internal server error in adding videos',
+        }),
+        { status: 500 }
+      );
     }
 
     return new Response(
@@ -143,29 +140,3 @@ export async function POST(req: Request) {
     );
   }
 }
-
-
-
-
-
-
-
-    // return new Response(
-    //     JSON.stringify({
-    //         success:true,
-    //         message:"Playlist Added Successfully",
-    //         data: await response.json()
-
-    //     })
-    // )
-//   } catch (error) {
-//     console.error("Error occurred while adding playlist:", error);
-//     return new Response(
-//         JSON.stringify({
-//             success: false,
-//             message: "Error occurred while adding playlist",
-//         }),
-//         { status: 500 }
-//     );
-// }
-// }
