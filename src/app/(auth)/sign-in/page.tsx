@@ -77,11 +77,12 @@ export default function SignInForm(){
         };
       
         return (
-            <div className="flex justify-center items-center min-h-screen bg-gray-800">
-              <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+            <div className="flex justify-center items-center min-h-screen bg-black text-white">
+              <div className="w-full max-w-md p-8 space-y-8 bg-transparent  rounded-lg sm:shadow-md sm:shadow-white">
                 <div className="text-center">
-                  <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
-                    Welcome Back to Xam Buddy
+                  <p className="text-lg">Welcome Back to </p>
+                  <h1 className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-pink-500 text-4xl font-extrabold lg:text-5xl mb-3">
+                    Xam Buddy
                   </h1>
                   <p className="mb-4">Sign in to continue your preparation</p>
                 </div>
@@ -109,7 +110,7 @@ export default function SignInForm(){
                         </FormItem>
                       )}
                     />
-                    <Button className='w-full' type="submit" disabled={isSubmitting}>{isSubmitting ? (
+                    <Button className='w-full bg-green-600 hover:bg-green-500 text-white bg-opacity-60' type="submit" disabled={isSubmitting}>{isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Please wait
@@ -121,11 +122,11 @@ export default function SignInForm(){
                   </Form>
         <div className="flex items-center justify-center my-4">
           <hr className="w-1/3 border-t border-gray-300" />
-          <span className="mx-2 text-gray-500">or</span>
+          <span className="mx-2 text-gray-400">or</span>
           <hr className="w-1/3 border-t border-gray-300" />
         </div>
         <Button
-          className="w-full flex items-center justify-center bg-white text-gray-700 border border-gray-300"
+          className="w-full flex items-center justify-center bg-white hover:bg-slate-300 text-gray-700 border border-gray-300"
           onClick={handleGoogleSignIn}
           disabled={isSubmitting}
         >

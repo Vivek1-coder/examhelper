@@ -111,7 +111,7 @@ export default function signUpForm() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-black text-white">
-      <div className="w-full max-w-xl p-3 space-y-8  bg-transparent  rounded-lg shadow-md shadow-white">
+      <div className="w-full max-w-xl p-3 space-y-8  bg-transparent  rounded-lg sm:shadow-md sm:shadow-white">
         <div className="text-center">
           <Link href={`/`}>
           <ArrowLeft className="text-white hover:scale-125"/>
