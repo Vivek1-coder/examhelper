@@ -3,7 +3,6 @@ import { getServerSession, User } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import mongoose from "mongoose";
 import NoteModel from "@/model/Note.model";
-import { ResponseCookies } from "next/dist/compiled/@edge-runtime/cookies";
 
 export async function POST(request:Request){
   await dbConnect()

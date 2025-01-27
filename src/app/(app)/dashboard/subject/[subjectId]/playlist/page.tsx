@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import AddPlaylist from "@/components/Add/AddPlaylist";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { Playlist } from "@/model/Playlist.model";
 import { ApiResponse } from "@/types/ApiResponse";
 import { useToast } from "@/hooks/use-toast";

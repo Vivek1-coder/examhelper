@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
-import { getServerSession, User } from "next-auth";
+import { getServerSession} from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import mongoose from "mongoose";
 import PYQModel from "@/model/PYQ.model";

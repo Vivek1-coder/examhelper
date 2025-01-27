@@ -11,11 +11,9 @@ import {
 import React, { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { useSession } from "next-auth/react";
 import { ApiResponse } from "@/types/ApiResponse";
 import axios, { AxiosError } from "axios";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
 import { ListPlus } from "lucide-react";
 
 const DialogComponentV = ({
@@ -27,10 +25,8 @@ const DialogComponentV = ({
 }) => {
   const [ques, setQues] = useState("");
   const [ans, setAns] = useState("");
-  const { data: session } = useSession();
 
   const { toast } = useToast();
-  const router = useRouter();
   const [isCreating, setIsCreating] = useState(false);
 
   const handleSubmit = async () => {

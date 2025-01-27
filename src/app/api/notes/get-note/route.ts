@@ -34,7 +34,6 @@ export async function GET(request:Request){
         )
     }
 
-    const userId = new mongoose.Types.ObjectId(user._id);
 
     try {
         const notes = await NoteModel.aggregate([

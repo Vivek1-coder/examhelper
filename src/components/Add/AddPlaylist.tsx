@@ -11,10 +11,8 @@ import {
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useSession } from "next-auth/react";
 import axios, { AxiosError } from "axios";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
 import { SquarePlus } from "lucide-react";
 
 const AddPlaylist = ({
@@ -26,11 +24,8 @@ const AddPlaylist = ({
 }) => {
   const [name, setName] = useState("");
   const [playlistLink, setPlaylistLink] = useState<string>("");
-  const { data: session } = useSession();
   const { toast } = useToast();
-  const router = useRouter();
   const [isCreating, setIsCreating] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const extractPlaylistId = (url: string): string | null => {
     const urlParts = url.split("?");
@@ -61,7 +56,6 @@ const AddPlaylist = ({
       return;
     }
 
-    setError(null);
 
     try {
       const response = await axios.post(

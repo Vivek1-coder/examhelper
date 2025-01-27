@@ -3,13 +3,11 @@ import React from 'react';
 import Navbar from "@/components/Navbar/Navbar2";
 import LogoutButton from '@/components/Signout';
 import { useSession } from 'next-auth/react';
-import Image from 'next/image';
-import logo from "../../../../public/2.png"
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 
 const Page = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   return (
     <div className="relative w-screen bg-black text-gray-200 font-sans p-0 m-0 text-sm">
       
@@ -24,7 +22,7 @@ const Page = () => {
           </Avatar>
           </div>
           <h1 className="text-2xl font-bold mt-2">{session?.user.name || session?.user.username}</h1>
-          <p className="text-xs">User's Bio</p>
+          <p className="text-xs">User&apos;s Bio</p>
           <br />
           <LogoutButton/>
         </div>

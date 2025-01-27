@@ -1,13 +1,11 @@
-import { NextApiRequest, NextApiResponse } from "next";
 
 import UserModel from "@/model/User.model";
-import { getSession } from "next-auth/react";
 import dbConnect from "@/lib/dbConnect";
 import { getServerSession, User } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 import mongoose from "mongoose";
 
-export async function GET(req: Request) {
+export async function GET() {
 
   try {
     // Connect to the database

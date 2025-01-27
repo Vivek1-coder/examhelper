@@ -6,8 +6,6 @@ import './card3.css'
 import axios from 'axios';
 import { ApiResponse } from '@/types/ApiResponse';
 import { Trash2, View } from 'lucide-react';
-import mongoose from 'mongoose';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 interface cardprops{

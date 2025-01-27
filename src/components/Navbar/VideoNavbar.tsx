@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import "./Navbar.css";
-import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Breadcrumb,
@@ -24,19 +23,7 @@ import { useParams } from "next/navigation";
 const NavbarQues = () => {
    const params = useParams();
        const subjectId = params?.subjectId;
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  useEffect(() => {
-    const updateScreenSize = () => setIsSmallScreen(window.innerWidth <= 768);
-    updateScreenSize(); // Initialize screen size
-    window.addEventListener("resize", updateScreenSize);
-    return () => window.removeEventListener("resize", updateScreenSize);
-  }, []);
+ 
 
   return (
     <header className="header flex items-center justify-between max-md:gap-2 px-3 md:px-16 py-2  md:text-white  bg-gradient-to-r from-transparent to-gray-200">

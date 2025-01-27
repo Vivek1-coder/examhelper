@@ -5,7 +5,7 @@ import { Loader2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const page = () => {
+const Page = () => {
   const params = useParams();
   const videoId = params?.videoId;
   const [loading, setLoading] = useState(true);
@@ -36,4 +36,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

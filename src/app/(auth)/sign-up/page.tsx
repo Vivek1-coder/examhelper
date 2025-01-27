@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { signUpSchema } from "@/schemas/signUpShema";
 import axios, { AxiosError } from "axios";
-import Select from "react-select";
 import { ApiResponse } from "@/types/ApiResponse";
 import {
   Form,
@@ -24,7 +23,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export default function signUpForm() {
+export default function SignUpForm() {
   const [username, setUsername] = useState("");
   const [usernameMessage, setUsernameMessage] = useState("");
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
@@ -96,7 +95,7 @@ export default function signUpForm() {
 
       const axiosError = error as AxiosError<ApiResponse>;
 
-      let errorMessage = axiosError.response?.data.message;
+      const errorMessage = axiosError.response?.data.message;
       ("There was a problem with your sign-up. Please try again.");
 
       toast({

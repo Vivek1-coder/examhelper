@@ -1,12 +1,10 @@
 
 
 import SubjectModel from "@/model/Subject.model";
-import { getServerSession, User } from "next-auth";
-import mongoose from "mongoose";
 import dbConnect from "@/lib/dbConnect";
-import { authOptions } from "../../auth/[...nextauth]/options";
 
-export async function GET(request:Request) {
+
+export async function GET() {
     await dbConnect()
 
     try {

@@ -16,8 +16,8 @@ import NavbarQues from "@/components/Navbar/Quesnavbar";
 import EditquesDialog from "@/components/Edit/EditquesDialog";
 import { FilePenLine, LoaderPinwheel } from "lucide-react";
 
-const page = () => {
-  let [ques, setQues] = useState<Vivaq[]>([]);
+const Page = () => {
+  const [ques, setQues] = useState<Vivaq[]>([]);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isQuesLoading, setIsQuesLoading] = useState(true);
   const [loading, setIsLoading] = useState(true);
@@ -143,4 +143,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

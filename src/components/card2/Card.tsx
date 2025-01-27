@@ -7,12 +7,11 @@ import './card2.css'
 interface cardprops{
     subjectName:string;
     subjectId:string;
-    author:string;
     likes:number;
     title:string;
 }
 
-export function Card({subjectName,subjectId,author,likes,title}:cardprops) {
+export function Card({subjectName,subjectId,likes,title}:cardprops) {
   return (
     <a href={`/dashboard/subject/${subjectId}/${title}`}>
     <div className='h-56 w-56 flex flex-col rounded-2xl gap-2 card border text-white' >

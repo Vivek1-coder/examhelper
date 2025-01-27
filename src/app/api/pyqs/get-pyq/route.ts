@@ -2,7 +2,6 @@ import dbConnect from "@/lib/dbConnect";
 import mongoose from "mongoose";
 import { getServerSession, User } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import NoteModel from "@/model/Note.model";
 import PYQModel from "@/model/PYQ.model";
 
 export async function GET(request:Request){
@@ -23,8 +22,6 @@ export async function GET(request:Request){
     }
     
 
-    const user:User = session?.user as User
-
     if(!session || !session.user){
         return Response.json(
             {
@@ -34,8 +31,6 @@ export async function GET(request:Request){
             { status : 401 }
         )
     }
-
-    const userId = new mongoose.Types.ObjectId(user._id);
 
     try {
         const pyqs = await PYQModel.aggregate([

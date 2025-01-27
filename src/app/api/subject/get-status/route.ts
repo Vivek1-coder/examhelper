@@ -2,7 +2,6 @@ import dbConnect from "@/lib/dbConnect";
 import SubjectModel from "@/model/Subject.model";
 import mongoose from "mongoose";
 import { getServerSession, User } from "next-auth";
-import { boolean } from "zod";
 import { authOptions } from "../../auth/[...nextauth]/options";
 
 export async function GET(request:Request) {

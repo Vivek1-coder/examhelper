@@ -13,9 +13,8 @@ import React, { useState,JSX } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
-import axios, { AxiosError } from "axios";
-import { useToast } from "@/hooks/use-toast";
-import { useParams, useRouter } from "next/navigation";
+import axios from "axios";
+import { useParams} from "next/navigation";
 import { Loader2, SquarePlus } from "lucide-react";
 import { ApiResponse } from "@/types/ApiResponse";
 
@@ -26,10 +25,7 @@ const AddPyqs = ({ onAdd }: { onAdd: () => void }) => {
     const [pyqfile, setpyqfile] = useState<File | null>(null);
     const { data: session } = useSession();
     const [resultMessage, setResultMessage] = useState<JSX.Element | null>(null);
-    const { toast } = useToast();
-    const router = useRouter();
     const [isCreating, setIsCreating] = useState(false);
-    const [error, setError] = useState<string | null>(null);
   
       const params = useParams();
       const subjectId = params?.subjectId;
@@ -112,6 +108,8 @@ const AddPyqs = ({ onAdd }: { onAdd: () => void }) => {
                   Uploaded successfully and set to public!
                 </p>
               );
+
+              onAdd()
             } else {
               const errorData = await permissionsResponse.json();
               console.error("Error setting file permissions:", errorData);

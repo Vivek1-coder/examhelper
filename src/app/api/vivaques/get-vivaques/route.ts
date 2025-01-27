@@ -1,4 +1,4 @@
-import SubjectModel from "@/model/Vivaq.model";
+
 import { getServerSession, User } from "next-auth";
 import mongoose from "mongoose";
 import dbConnect from "@/lib/dbConnect";
@@ -21,7 +21,7 @@ export async function GET(request: Request) {
 
     // Get session
     const session = await getServerSession(authOptions);
-    const user: User = session?.user as User;
+
 
     // Check if the user is authenticated
     if (!session || !session.user) {

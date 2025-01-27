@@ -12,19 +12,17 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
-import { useRouter } from "next/navigation";
 import { FolderPlus } from "lucide-react";
 
 const DialogComponent = ({ onAdd }: { onAdd: () => void }) => {
   const [name, setName] = useState("");
   const [isPublic, setIsPublic] = useState(true);
-  const { data: session } = useSession();
+ 
   const { toast } = useToast();
-  const router = useRouter();
+
   const [isCreating, setIsCreating] = useState(false);
 
   const handleSubmit = async () => {
