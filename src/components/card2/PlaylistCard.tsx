@@ -79,7 +79,14 @@ export function PlaylistCard({thumbnail,title,nvideos,playlistId,subjectId,onDel
     <div className='h-56 w-56 flex flex-col rounded-2xl gap-2 card border justify-center' >
       <Link href={`playlist/${playlistId}`}>
         <div className='flex w-full h-20'>
-        <img className = " rounded-t-lg w-full" src={`${thumbnail}`} alt="" />
+        <Image
+  className="rounded-t-lg w-full"
+  src={thumbnail} // Ensure `thumbnail` is an absolute path or starts with `/` if local
+  alt=""
+  layout="responsive" // You can adjust layout to "intrinsic" or "fixed" if needed
+  width={500} // Replace with the actual width of your image
+  height={300} // Replace with the actual height of your image
+/>
         </div>
         
         <div className='flex flex-col justify-center w-full h-24 text-center gap-2 '>
