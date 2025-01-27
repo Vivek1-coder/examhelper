@@ -16,7 +16,7 @@ import { useSession } from 'next-auth/react';
 
 
 const Navbarvideo = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
@@ -29,7 +29,7 @@ const Navbarvideo = () => {
     updateScreenSize(); // Initialize screen size
     window.addEventListener('resize', updateScreenSize);
     return () => window.removeEventListener('resize', updateScreenSize);
-  }, []);
+  }, [isSmallScreen]);
 
   return (
     <header className="header flex items-center justify-between px-16 py-2  md:text-black bg-white w-full">

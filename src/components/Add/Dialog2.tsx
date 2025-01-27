@@ -53,8 +53,8 @@ const DialogComponentV = ({
       const axiosError = error as AxiosError<ApiResponse>;
 
       // Default error message
-      let errorMessage = axiosError.response?.data.message;
-      ("There was a problem in adding a new subject. Please try again.");
+      const errorMessage = axiosError.response?.data.message;
+  
 
       toast({
         title: "Subject not added",

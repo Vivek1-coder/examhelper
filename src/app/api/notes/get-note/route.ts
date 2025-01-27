@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import mongoose from "mongoose";
-import { getServerSession, User } from "next-auth";
+import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import NoteModel from "@/model/Note.model";
 
@@ -22,7 +22,6 @@ export async function GET(request:Request){
     }
     
 
-    const user:User = session?.user as User
 
     if(!session || !session.user){
         return Response.json(

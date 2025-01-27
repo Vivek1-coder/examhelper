@@ -7,13 +7,11 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Loader } from 'lucide-react';
 
 const NavbarHome = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [loading,setIsLoading] = useState(false);
     const [loading2,setIsLoading2] = useState(false);
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  
 
   useEffect(() => {
     const updateScreenSize = () => setIsSmallScreen(window.innerWidth <= 768);
@@ -22,7 +20,7 @@ const NavbarHome = () => {
     setIsLoading2(false);
     window.addEventListener('resize', updateScreenSize);
     return () => window.removeEventListener('resize', updateScreenSize);
-  }, []);
+  }, [isSmallScreen]);
 
   return (
     <header className="header w-full flex items-center justify-between px-8 md:px-16 py-2 text-white bg-opacity-10  bg-gradient-to-r from-transparent to-gray-200">

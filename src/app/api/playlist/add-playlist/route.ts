@@ -4,7 +4,7 @@ import VideoModel from '@/model/Video.model';
 import { getServerSession, User } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import mongoose from 'mongoose';
-import { NextApiRequest, NextApiResponse } from 'next';
+
 
 const YOUTUBE_PLAYLIST_ITEMS_API = 'https://www.googleapis.com/youtube/v3/playlistItems';
 
@@ -102,7 +102,7 @@ export async function POST(req: Request) {
           // Log the result of the bulk operation
          
         try {
-            const result = await VideoModel.insertMany(validVideos, { ordered: false });
+            await VideoModel.insertMany(validVideos, { ordered: false });
            
         } catch (error) {
             console.error('Internal server error in adding bulk videos', error);

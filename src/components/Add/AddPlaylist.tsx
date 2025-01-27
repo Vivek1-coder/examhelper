@@ -32,7 +32,7 @@ const AddPlaylist = ({
     if (urlParts.length > 1) {
       const queryString = urlParts[1];
       const params = queryString.split("&");
-      for (let param of params) {
+      for (const param of params) {
         const [key, value] = param.split("=");
         if (key === "list") {
           return value;
