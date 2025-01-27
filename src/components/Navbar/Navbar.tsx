@@ -16,19 +16,17 @@ import {
 
 
 const NavbarQues = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+ 
 
   useEffect(() => {
     const updateScreenSize = () => setIsSmallScreen(window.innerWidth <= 768);
     updateScreenSize(); // Initialize screen size
     window.addEventListener('resize', updateScreenSize);
     return () => window.removeEventListener('resize', updateScreenSize);
-  }, []);
+  }, [isSmallScreen]);
 
   return (
     <header className="header flex items-center justify-between px-3 md:px-16 py-2  md:text-white  bg-gradient-to-r from-transparent to-gray-200">

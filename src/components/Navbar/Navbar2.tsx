@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/react';
 
 
 const Navbar = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 

@@ -1,4 +1,4 @@
-import mongoose,{Schema,Document, trusted} from "mongoose";  
+import mongoose,{Schema,Document} from "mongoose";  
 import { User, UserSchema } from "./User.model";
 
 export interface Group extends Document{
