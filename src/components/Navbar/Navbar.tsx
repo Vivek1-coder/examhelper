@@ -32,22 +32,17 @@ const NavbarQues = () => {
   }, []);
 
   return (
-    <header className="header flex items-center justify-between px-16 py-2  md:text-white  bg-gradient-to-r from-black to-gray-100">
+    <header className="header flex items-center justify-between px-3 md:px-16 py-2  md:text-white  bg-gradient-to-r from-transparent to-gray-200">
      <Link href="/dashboard">
-      <Avatar className=' text-black'>
-        <AvatarFallback>XB</AvatarFallback>
-      </Avatar>
+      <div className='flex gap-3 items-center'>
+        <Avatar className=" text-white hover:scale-105">
+          <AvatarFallback className='bg-black'>XB</AvatarFallback>
+        </Avatar>
+      <p className='bg-clip-text text-transparent font-extrabold bg-gradient-to-r from-yellow-300 to-pink-500 max-sm:hidden'>XAM BUDDY</p>
+      </div>
       </Link>
     
-      <button
-        className={`hamburger ${isMenuOpen ? 'open' : ''}`}
-        onClick={toggleMenu}
-        aria-label="Toggle menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      
       <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>

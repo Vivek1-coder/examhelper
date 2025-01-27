@@ -100,7 +100,7 @@ const page = () => {
       </div>
 
       <div className="w-full h-full flex justify-center items-center p-10">
-        <div className=" w-1/2 h-1/2 flex flex-col items-center rounded-3xl p-10 overflow-y-auto">
+        <div className="w-full h-5/6 md:w-1/2 md:h-1/2 flex flex-col items-center rounded-3xl p-10 overflow-y-auto">
           {ques.length > 0 ? (
             ques.map((q) => (
               <div key={q._id as string} className="text-white w-full">
@@ -113,7 +113,7 @@ const page = () => {
                       {!isPublic && (
                         <button
                           onClick={handleEditClick}
-                          className=" text-blue-500 rounded-lg mb-2 w-1/2"
+                          className=" text-blue-500 rounded-lg mb-2 w-10 md:w-1/2"
                         >
                           <FilePenLine />
                           {isEditOpen && (

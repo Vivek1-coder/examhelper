@@ -13,7 +13,7 @@ const page = () => {
       <div className="absolute top-0 w-full">
         <Navbar />
       </div>
-      <div className="w-screen h-screen flex justify-center items-center gap-10">
+      <div className="w-screen md:h-screen flex flex-wrap justify-center items-center gap-10 max-md:py-28">
         <Card
           subjectId={subjectId as string}
           title="notes"

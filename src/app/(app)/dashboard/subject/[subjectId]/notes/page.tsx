@@ -71,7 +71,7 @@ const Page = () => {
         <NotesNavbar />
       </div>
       <div className="w-full h-full flex justify-center items-center">
-        <div className="w-3/4 h-3/4 flex flex-wrap justify-center gap-4">
+        <div className="w-3/4 h-3/4 flex flex-wrap justify-center gap-2 md:gap-4">
           {isNoteLoading && (
             <LoaderPinwheel className="animate-spin text-white" />
           )}
