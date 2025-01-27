@@ -208,7 +208,7 @@ export default function signUpForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full bg-green-600 hover:bg-green-800 hover:scale-y-105 " disabled={isSubmitting}>
+            <Button type="submit" className="w-full bg-green-600 hover:bg-green-800  " disabled={isSubmitting}>
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

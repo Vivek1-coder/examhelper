@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 
 
 export default function SignInForm(){
@@ -78,8 +78,11 @@ export default function SignInForm(){
       
         return (
             <div className="flex justify-center items-center min-h-screen bg-black text-white">
-              <div className="w-full max-w-md p-8 space-y-8 bg-transparent  rounded-lg sm:shadow-md sm:shadow-white">
+              <div className="w-full max-w-md py-5 px-8 space-y-8 bg-transparent  rounded-lg sm:shadow-md sm:shadow-white">
                 <div className="text-center">
+                <Link href={`/`}>
+          <ArrowLeft className="text-white hover:scale-125"/>
+          </Link>
                   <p className="text-lg">Welcome Back to </p>
                   <h1 className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-pink-500 text-4xl font-extrabold lg:text-5xl mb-3">
                     Xam Buddy

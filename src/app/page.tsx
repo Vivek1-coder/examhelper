@@ -12,7 +12,7 @@ export default function Home() {
       <Image src={Homelogo} alt="Home" className="md:hidden " />
       <div className="flex justify-center items-center w-full max-md:h-screen h-full max-md:bg-black">
         <div className=" w-full  lg:mx-1 md:w-1/2 flex justify-center">
-          <div className="w-full  rounded-xl text-center md:p-5 lg:p-10 md:bg-black shadow-md shadow-white  text-white ">
+          <div className="w-full  rounded-xl text-center md:p-5 lg:p-10 md:bg-black sm:shadow-md sm:shadow-white  text-white ">
             <p className="text-xl font-medium tracking-wide">
               Take charge of your studies with ease!
             </p>

@@ -55,8 +55,8 @@ const VerifyAccount = () => {
     }
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
-          <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+        <div className="flex justify-center items-center min-h-screen  text-white">
+          <div className="w-full max-w-md p-8 space-y-8 bg-slate-500 bg-opacity-40   rounded-lg shadow-md shadow-white">
             <div className="text-center">
               <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
                 Verify Your Account
@@ -89,7 +89,7 @@ const VerifyAccount = () => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit">Verify</Button>
+                <Button type="submit" className="bg-green-600 hover:bg-green-800">Verify</Button>
               </form>
             </Form>
           </div>
