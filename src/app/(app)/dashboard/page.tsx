@@ -15,10 +15,10 @@ const Dashboard = () => {
       <div className="absolute top-0 w-full text-white ">
         <Navbar />
       </div>
-
-      <div className="flex justify-center items-center">
-        <div className=" w-1/2 flex justify-center mr-0">
-          <div className="w-full rounded-xl ml-6 text-center p-6 bg-gradient-to-r from-slate-950 to-slate-800 text-white shadow-lg">
+     
+      <div className="flex max-md:flex-col justify-center items-center">
+        <div className="w-full md:w-1/2 flex justify-center max-md:items-center mr-1 ">
+          <div className="w-full rounded-xl ml-6 text-center p-6 md:bg-black sm:shadow-md sm:shadow-white  text-white  max-md:mt-32 ">
             <p className="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-white to-green-500">
               Welcome {session?.user.name || session?.user.username}!!!
             </p>
@@ -33,7 +33,7 @@ const Dashboard = () => {
               Your ultimate companion to make preparation
             </p>
 
-            <div className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-red-50 to-red-500 ">
+            <div className="font-bold text-2xl ">
               <Typewriter
                 words={[
                   "Structured",
@@ -46,7 +46,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <Image src={Home} alt="Home" className="w-1/2 h-screen" />
+        <Image src={Home} alt="Home" className="w-full md:w-1/2 h-screen" />
       </div>
     </div>
   );

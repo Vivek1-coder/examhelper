@@ -23,11 +23,14 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="header flex items-center justify-between px-16 py-2  md:text-white bg-gradient-to-r from-slate-950 to-slate-400">
+    <header className="header flex items-center justify-between px-16 py-2  md:text-white bg-opacity-10 bg-gradient-to-r from-transparent to-gray-200">
       <Link href="/dashboard">
-      <Avatar className=' text-black'>
-        <AvatarFallback>XB</AvatarFallback>
-      </Avatar>
+      <div className='flex gap-3 items-center'>
+        <Avatar className=" text-white hover:scale-105">
+          <AvatarFallback className='bg-black'>XB</AvatarFallback>
+        </Avatar>
+      <p className='bg-clip-text text-transparent font-extrabold bg-gradient-to-r from-yellow-300 to-pink-500 max-sm:hidden'>XAM BUDDY</p>
+      </div>
       </Link>
       <button
         className={`hamburger ${isMenuOpen ? 'open' : ''}`}
@@ -38,20 +41,20 @@ const Navbar = () => {
         <span></span>
         <span></span>
       </button>
-      <nav className={`menu ${isMenuOpen ? 'active' : ''}`}>
+      <nav className={`menu ${isMenuOpen ? 'active' : ''} `}>
         <Link
           href="/dashboard/subject"
           className={`${
             isSmallScreen ? '' : 'nav-link'
-          } text-white md:text-white hover:text-purple-400 text-center`}
+          } text-white md:text-white hover:text-slate-950 text-center hover:scale-105`}
         >
           Subjects
         </Link>
         <Link
           href="#"
           className={`${
-            isSmallScreen ? '' : 'nav-link'
-          } text-white md:text-white hover:text-purple-400 text-center`}
+            isSmallScreen ? '' : 'nav-link ' 
+          } text-white md:text-white hover:text-slate-950 text-center hover:scale-105`}
         >
           Followers
         </Link>
@@ -59,7 +62,7 @@ const Navbar = () => {
           href="#"
           className={`${
             isSmallScreen ? '' : 'nav-link'
-          } text-white md:text-white hover:text-purple-400 text-center`}
+          } text-white md:text-white hover:text-slate-950 text-center hover:scale-105`}
         >
           Notifications
         </Link>
@@ -67,14 +70,14 @@ const Navbar = () => {
           href="#"
           className={`${
             isSmallScreen ? '' : 'nav-link'
-          } text-white md:text-white hover:text-purple-400 text-center`}
+          } text-white md:text-white hover:text-slate-950 text-center hover:scale-105`}
         >
           Groups
         </Link>
       </nav>
       
       <Link href="/profile">
-      <Avatar>
+      <Avatar className='hover:scale-105'>
         <AvatarImage src={session?.user.image} />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
