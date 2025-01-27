@@ -1,100 +1,72 @@
 'use client'
-import LogoutButton from '@/components/Signout'
-import React from 'react'
-import Navbar from '@/components/Navbar/Navbar2'
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import React from 'react';
+import Navbar from "@/components/Navbar/Navbar2";
+import LogoutButton from '@/components/Signout';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import logo from "../../../../public/2.png"
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-]
 
-const page = () => {
+const Page = () => {
+  const { data: session, status } = useSession();
   return (
-    <div className='h-scren w-screen relative text-white'>
+    <div className="relative w-screen bg-black text-gray-200 font-sans p-0 m-0 text-sm">
+      
       <div><Navbar/></div>
-     <div className='w-1/2 flex flex-col justify-center items-center'>
-     <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Invoice</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.invoice}>
-            <TableCell className="font-medium">{invoice.invoice}</TableCell>
-            <TableCell>{invoice.paymentStatus}</TableCell>
-            <TableCell>{invoice.paymentMethod}</TableCell>
-            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
-        <LogoutButton/>
-    </div>
-    </div>
+    <div className='flex max-md:flex-col justify-between p-4'>
+    <div className="profile-nav mt-8 w-full md:w-2/5 h-1/3">
+        <div className="w-full h-full bg-yellow-500 text-white rounded-lg py-8 text-center">
+          <div className="inline-block rounded-full border-2 transform hover:scale-105">
+              <Avatar className='w-40 h-40'>
+            <AvatarImage src={session?.user.image} />
+            <AvatarFallback>XB</AvatarFallback>
+          </Avatar>
+          </div>
+          <h1 className="text-2xl font-bold mt-2">{session?.user.name || session?.user.username}</h1>
+          <p className="text-xs">User's Bio</p>
+          <br />
+          <LogoutButton/>
+        </div>
+
+      </div>
+
+      <div className="profile-info mt-8 w-full md:w-1/2 h-1/3">
+        <div className="bio-graph-heading w-full h-full flex flex-col justify-center items-center p-5 bg-yellow-500 text-white text-center italic rounded-lg">
+       
+          <h1 className="text-2xl font-light mb-5">Personal Details</h1>
+          <div className="bio-row w-1/2 float-left mb-3 px-4">
+            <p className="font-semibold">Username:</p>
+            <p>{session?.user.name || session?.user.username}</p>
+          </div>
+          <div className="bio-row w-1/2 float-left mb-3 px-4">
+            <p className="font-semibold">Email:</p>
+            <p>{session?.user.email}</p>
+          </div>
+          <div className="bio-row w-1/2 float-left mb-3 px-4">
+            <p className="font-semibold">College:</p>
+            <p>College Name</p>
+          </div>
+          <div className="bio-row w-1/2 float-left mb-3 px-4">
+            <p className="font-semibold">Location:</p>
+            <p>India</p>
+          </div>
+        
+        </div>
+       
+      </div>
+      
+      </div>
+
+      <div className="profile-activity mt-4  max-md:h-screen">
+        <div className="activity-summary m-3 rounded-lg bg-red-400 text-white text-center py-4">
+          <h4 className="text-lg font-light">Activity Summary</h4>
+          <p className="text-xs">Recent Activity Overview</p>
+        </div>
+      </div>
     
-  )
+    </div>
+  );
 }
 
-export default page
+export default Page;
