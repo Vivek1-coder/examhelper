@@ -42,16 +42,28 @@ export function Notecard({id,title,content,subjectId,onDelete}:cardprops) {
         console.error("Backend error:", response.data.message);
         throw new Error(response.data.message || "Failed to delete subject.");
       }
-    } catch (error: any) {
-      console.error("Frontend error:", error.response || error.message);
-      toast({
-        title: "Error",
-        description:
-          error.response?.data?.message ||
-          (error instanceof Error ? error.message : "An error occurred."),
-        variant: "destructive",
-      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        // Handle error when it's an instance of Error
+        console.error("Frontend error:", error.message);
+        toast({
+          title: "Error",
+          description:
+            error.message ||
+            "An error occurred.",
+          variant: "destructive",
+        });
+      } else {
+        // Handle unexpected error types
+        console.error("Unexpected error:", error);
+        toast({
+          title: "Error",
+          description: "An unexpected error occurred.",
+          variant: "destructive",
+        });
+      }
     }
+    
   };
   
   useEffect(() => {
