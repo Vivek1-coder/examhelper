@@ -28,6 +28,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthProvider>
+        <head>
+        <meta name="google-site-verification" content="4Wn2rZJZjnWhpUL56NKhgvfPH0cJGvGNFVmq3t13M58" />
+        </head>
+        
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black relative `}
         >
