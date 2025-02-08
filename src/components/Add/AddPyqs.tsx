@@ -21,7 +21,7 @@ import { ApiResponse } from "@/types/ApiResponse";
 const AddPyqs = ({ onAdd }: { onAdd: () => void }) => {
     const [name, setName] = useState("");
     const [semester, setSemester] = useState(1);
-    const [year, setYear] = useState(2015);
+    const [year, setYear] = useState("2015");
     const [pyqfile, setpyqfile] = useState<File | null>(null);
     const { data: session } = useSession();
     const [resultMessage, setResultMessage] = useState<JSX.Element | null>(null);
@@ -171,7 +171,7 @@ const AddPyqs = ({ onAdd }: { onAdd: () => void }) => {
                 <Input
                   id="year"
                   value={year}
-                  onChange={(e) => setYear(Number(e.target.value))}
+                  onChange={(e) => setYear(e.target.value)}
                   className="col-span-3"
                 />
               </div>
