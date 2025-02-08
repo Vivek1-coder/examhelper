@@ -105,7 +105,7 @@ const AddPyqs = ({ onAdd }: { onAdd: () => void }) => {
       
               setResultMessage(
                 <p className="text-green-600">
-                  Uploaded successfully and set to public!
+                  Uploaded successfully!
                 </p>
               );
 
