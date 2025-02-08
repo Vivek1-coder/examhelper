@@ -16,5 +16,4 @@ export interface ApiResponse{
     notes?:Array<Note>;
     videos?:Array<Video>;
     user?:Array<User>;
-
 }      

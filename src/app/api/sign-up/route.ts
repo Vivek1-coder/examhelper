@@ -1,7 +1,9 @@
+import { sendVerificationOtp } from "@/helpers/sendVerificationOtp";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User.model";
 import bcrypt from "bcryptjs";
-import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
+
+// import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 
 export async function POST(request:Request) {
     await dbConnect()
@@ -67,8 +69,19 @@ export async function POST(request:Request) {
 
             await newUser.save();
     }
+    // const serviceId = process.env.EMAILJS_SERVICEID || '';
+    // const templateId = process.env.EMAILJS_TEMPLATEID || '';
+    // const publicKey = process.env.EMAILJS_PUBLIC_KEY || '';
+   
 
-    const emailResponse = await sendVerificationEmail(
+    // const emailData = {
+    //     service_id: serviceId,
+    //     template_id: templateId,
+    //     user_id: publicKey, // Public key (client-side)
+    //     template_params: { username:username,
+    //         otp:verifyCode },
+    //   };
+    const emailResponse = await sendVerificationOtp(
         email,
         username,
         verifyCode
@@ -82,7 +95,7 @@ export async function POST(request:Request) {
           { status: 500 }
         );
       }
-  
+
       return Response.json(
         {
           success: true,
