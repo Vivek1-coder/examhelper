@@ -59,7 +59,7 @@ const Navbar = () => {
           Todos
         </Link>
         <Link
-          href="#"
+          href="/dashboard/notification"
           className={`${
             isSmallScreen ? '' : 'nav-link'
           } text-white md:text-white hover:text-slate-950 text-center hover:scale-105`}
