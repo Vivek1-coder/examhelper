@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from "react";
 import { getSession } from "next-auth/react";
+import Navbar from "@/components/Navbar/Navbar2";
 
 export default function NotificationsPage() {
     const [notifications, setNotifications] = useState<{ message: string; createdAt: Date }[]>([]);
@@ -41,7 +42,11 @@ export default function NotificationsPage() {
     }
 
     return (
-        <div className="p-6 text-white bg-gray-900 min-h-screen flex flex-col items-center">
+        <section className="h-screen relative">
+      <div className="absolute top-0 w-full">
+        <Navbar />
+      </div>
+        <div className="pt-20 p-6 text-white bg-gray-900 min-h-screen flex flex-col items-center">
         <h1 className="text-2xl font-bold mb-6 text-center">📢 Notifications</h1>
     
         {isAdmin && (
@@ -80,6 +85,7 @@ export default function NotificationsPage() {
             )}
         </div>
     </div>
+    </section>
     
     );
 }
