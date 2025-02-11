@@ -22,12 +22,12 @@ import Navbar from "@/components/Navbar/Navbar";
 import { useToast } from "@/hooks/use-toast";
 import { ApiResponse } from "@/types/ApiResponse";
 import axios from "axios";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState, useCallback } from "react";
 import { NameCard } from "@/components/card2/NameCard";
 
 const Page = () => {
-  const router = useRouter();
+
   const params = useParams();
   const { toast } = useToast();
   const subjectId = params?.subjectId;
