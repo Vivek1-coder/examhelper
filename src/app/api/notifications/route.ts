@@ -11,6 +11,7 @@ export async function GET() {
         const notifications = await NotificationModel.find().sort({ createdAt: -1 });
         return new Response(JSON.stringify({ success: true, notifications }), { status: 200 });
     } catch (error) {
+        console.error("Error in POST /api/notifications:", error);
         return new Response(JSON.stringify({ success: false, message: "Error fetching notifications" }), { status: 500 });
     }
 }
