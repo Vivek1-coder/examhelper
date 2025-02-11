@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 import TodoForm from "@/components/TodoHelper/TodoForm";
 import TodoItem from "@/components/TodoHelper/TodoItem";
 import Navbar from "@/components/Navbar/Navbar2";
@@ -7,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const Page = () => {
+    
   const [todos, setTodos] = useState<{ id: number; todo: string; completed: boolean }[]>([]);
 
   const addTodo = (todo: { id: number; todo: string; completed: boolean }) => {
