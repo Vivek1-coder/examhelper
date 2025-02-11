@@ -1,15 +1,27 @@
 import { createContext, useContext } from "react";
 
-export const TodoContext = createContext({
-    todos: [] as { id: number; todo: string; completed: boolean }[],
-    addTodo: (_todo: { id: number; todo: string; completed: boolean }) => {},
-    updatedTodo: (_id: number, _todo: { id: number; todo: string; completed: boolean }) => {},
-    deleteTodo: (_id: number) => {},
-    toggleComplete: (_id: number) => {}
-});
+interface Todo {
+    id: number;
+    todo: string;
+    completed: boolean;
+}
+
+interface TodoContextType {
+    todos: Todo[];
+    addTodo: (todo: Todo) => void;
+    updatedTodo: (id: number, todo: Todo) => void;
+    deleteTodo: (id: number) => void;
+    toggleComplete: (id: number) => void;
+}
+
+export const TodoContext = createContext<TodoContextType | null>(null);
 
 export const useTodo = () => {
-    return useContext(TodoContext);
+    const context = useContext(TodoContext);
+    if (!context) {
+        throw new Error("useTodo must be used within a TodoProvider");
+    }
+    return context;
 };
 
 export const Todoprovider = TodoContext.Provider;
