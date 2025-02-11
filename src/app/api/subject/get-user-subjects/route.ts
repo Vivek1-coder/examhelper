@@ -1,61 +1,78 @@
-
-
 import SubjectModel from "@/model/Subject.model";
 import { getServerSession, User } from "next-auth";
 import mongoose from "mongoose";
 import dbConnect from "@/lib/dbConnect";
 import { authOptions } from "../../auth/[...nextauth]/options";
+import GroupModel from "@/model/Group.model";
+import { NextResponse } from "next/server"; // Import NextResponse for API responses
 
 export async function GET() {
-    await dbConnect()
+    await dbConnect();
 
-    const session = await getServerSession(authOptions)
-    const user:User = session?.user as User
-
-    if(!session || !session.user){
-        return Response.json(
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user) {
+        return NextResponse.json(
             {
-                success : false,
-                message:"Not Authentication"
+                success: false,
+                message: "Not Authenticated",
             },
-            { status : 401 }
-        )
+            { status: 401 }
+        );
+    }
+
+    const user: User = session.user as User;
+    if (!user._id) {
+        return NextResponse.json(
+            {
+                success: false,
+                message: "User ID not found in session",
+            },
+            { status: 400 }
+        );
     }
 
     const userId = new mongoose.Types.ObjectId(user._id);
 
     try {
-        const subjects = await SubjectModel.aggregate([
-            {$match : {author:userId}},
-            {$sort:{'name':-1}}
-        ])
+        // Fetch subjects where the user is the author
+        const subjects = await SubjectModel.find({ author: userId }).sort({ name: -1 });
 
-        if(!subjects || subjects.length == 0){
-            return Response.json(
-                {
-                    success:false,
-                    message:"Subjects not found"
-                }
-            )
-        }
+        // Find groups where the user is a member
+        const userGroups = await GroupModel.find({ members: userId });
 
-        return Response.json(
+        // Extract all member IDs from those groups
+        const memberIds = new Set();
+        userGroups.forEach(group => {
+            group.members.forEach(member => memberIds.add(member.toString()));
+        });
+
+        // Find subjects where the author is one of the group members
+        const subjects2 = await SubjectModel.find({ author: { $in: Array.from(memberIds) } });
+
+        console.log("User Subjects:", subjects2);
+
+        // Merge subjects (avoid duplicates)
+        const mergedSubjects = [...subjects, ...subjects2].filter(
+            (subject, index, self) =>
+                index === self.findIndex(s => s.id.toString() === subject.id.toString())
+        );
+
+        return NextResponse.json(
             {
-                success:true,
-                message:"User message found",
-                subjects:subjects
+                success: true,
+                message: "User subjects found",
+                subjects: mergedSubjects,
             },
-            {status:200}
-        )
+            { status: 200 }
+        );
     } catch (error) {
-        console.log("Error occured while getting messages",error)
-        return Response.json(
+        console.error("Error occurred while getting subjects:", error);
+        return NextResponse.json(
             {
-                success : false,
-                message:"Error occured while getting subjects"
+                success: false,
+                message: "Error occurred while getting subjects",
             },
-            { status : 401 }
-        )
-    } 
-    
+            { status: 500 }
+        );
+    }
 }

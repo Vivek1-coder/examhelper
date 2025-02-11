@@ -9,6 +9,9 @@ import { Vivaq } from "@/model/Vivaq.model";
 export interface ApiResponse{
     success: boolean;
     message: string;
+    adminName?:string;
+    groupName?:string;
+    members ?: Array<string>;
     subjects?:Array<Subject>;
     ques?:Array<Vivaq>;
     playlists?:Array<Playlist>;

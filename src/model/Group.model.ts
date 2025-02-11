@@ -1,9 +1,11 @@
 import mongoose,{Schema,Document} from "mongoose";  
-import { User, UserSchema } from "./User.model";
+import { User} from "./User.model";
 
 export interface Group extends Document{
     groupName:string,
-    members: User[],
+    admin : mongoose.Schema.Types.ObjectId,
+    subjectId:mongoose.Schema.Types.ObjectId,
+    members: mongoose.Schema.Types.ObjectId[],
     createdAt:Date
 }
 
@@ -14,10 +16,20 @@ const GroupSchema: Schema<Group> = new Schema({
         unique:true,
         index:true
     },
-    members:[UserSchema],
+    admin:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"User",
+            required:true
+    },
+    subjectId:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Subject",
+            required:true
+    },
+    members: [{ type: mongoose.Schema.Types.ObjectId, ref: "User",default:[]}],
     createdAt:{
         type:Date,
-        default:Date.now(),
+        default:Date.now,
         required:true
     }
 })

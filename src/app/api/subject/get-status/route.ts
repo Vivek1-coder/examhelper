@@ -3,6 +3,7 @@ import SubjectModel from "@/model/Subject.model";
 import mongoose from "mongoose";
 import { getServerSession, User } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
+import GroupModel from "@/model/Group.model";
 
 export async function GET(request:Request) {
     dbConnect();
@@ -34,6 +35,15 @@ export async function GET(request:Request) {
             message = "Private";
         } else {
             message = "Public";
+        }
+
+        const group = await GroupModel.findOne({
+            subjectId: new mongoose.Types.ObjectId(subjectId as string),
+            $or: [{ admin: userId }, { members: userId }],
+        })
+
+        if(group){
+            message = "Private";
         }
         return new Response(
             JSON.stringify(

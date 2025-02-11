@@ -9,7 +9,6 @@ const UsernameQuerySchema = z.object({
 
 export async function GET(request:Request){
     await dbConnect()
-
     try {
         const {searchParams} = new URL(request.url)
         const queryParam = {
@@ -31,9 +30,9 @@ export async function GET(request:Request){
 
         if(existingVerifiedUser){
             return Response.json({
-                success:false,
+                success:true,
                 message:'Username already taken'
-            },{status:400})
+            },{status:200})
         }
 
         return Response.json({

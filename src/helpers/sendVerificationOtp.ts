@@ -18,8 +18,8 @@ export async function sendVerificationOtp(email:string,
     const mailOptions = {
       from: `"Your Name" <${process.env.SMTP_USER}>`,
       to: email,
-    subject: 'Exam Buddy | Verification code',
-    text : `Hello ${username}, your verification code for XamBuddy is ${verifyCode}`
+     subject: 'Exam Buddy | Verification code',
+     text : `Hello ${username}, your verification code for XamBuddy is ${verifyCode}`
     };
 
     await transporter.sendMail(mailOptions);
