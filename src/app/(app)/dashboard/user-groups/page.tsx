@@ -25,6 +25,7 @@ export default function GroupsPage() {
                     setError("Failed to fetch groups");
                 }
             } catch (error) {
+                console.log("Error fetching dat",error);
                 setError("Error fetching data");
             } finally {
                 setLoading(false);
