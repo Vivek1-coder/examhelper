@@ -51,12 +51,12 @@ const Navbar = () => {
           Subjects
         </Link>
         <Link
-          href="#"
+          href="/dashboard/todo"
           className={`${
             isSmallScreen ? '' : 'nav-link ' 
           } text-white md:text-white hover:text-slate-950 text-center hover:scale-105`}
         >
-          Followers
+          Todos
         </Link>
         <Link
           href="#"
