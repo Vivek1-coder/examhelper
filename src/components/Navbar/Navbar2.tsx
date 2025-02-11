@@ -67,7 +67,7 @@ const Navbar = () => {
           Notifications
         </Link>
         <Link
-          href="#"
+          href="/dashboard/user-groups"
           className={`${
             isSmallScreen ? '' : 'nav-link'
           } text-white md:text-white hover:text-slate-950 text-center hover:scale-105`}
