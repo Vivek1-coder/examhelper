@@ -28,7 +28,7 @@ export async function GET() {
 
     // Find the user by email
     const user = await UserModel.findById(userId)
-    console.log(sessionUser.email)
+    // console.log(sessionUser.email)
         if (!user) {
         return Response.json(
             {

@@ -40,7 +40,7 @@ export async function GET(request:Request){
 
         const adminusername = Admin?.username;
         const groupName = group?.groupName;
-        console.log("Admin ",adminusername)
+        // console.log("Admin ",adminusername)
         return new Response(
             JSON.stringify({success:true,message:"Member",adminName:adminusername,groupName:groupName}),
             {status:200}

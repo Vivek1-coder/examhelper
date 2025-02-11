@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import dbConnect from "@/lib/dbConnect";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 import GroupModel from "@/model/Group.model";
 
 export async function GET(request: Request) {
@@ -37,8 +38,8 @@ export async function GET(request: Request) {
         const memberNames = members.map((member: any) => member.username);
         // const memberNames = group.members.map(member => member.);
         // console.log(memberNames); // Output: ['vivek', 'vivek2']
-        console.log(typeof(memberNames[0]))
-        console.log(memberNames);
+        // console.log(typeof(memberNames[0]))
+        // console.log(memberNames);
 
         return new Response(
             JSON.stringify({ success: true, message:"User fetched successfully",members:memberNames}),

@@ -37,6 +37,7 @@ export async function GET(request:Request){
             { status: 200 }
         );
     } catch (error) {
+        console.error("Error while getting admin status",error)
         return new Response(
             JSON.stringify({ success: false, message: "Internal server error while getting admin status" }),
             { status: 500 }

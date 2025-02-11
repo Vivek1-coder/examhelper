@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
-import { FolderPlus, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import { useParams } from "next/navigation";
 
 const AddGroup = ({ onAdd }: { onAdd: () => void }) => {

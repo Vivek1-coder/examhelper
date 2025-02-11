@@ -1,5 +1,4 @@
 import mongoose,{Schema,Document} from "mongoose";  
-import { User} from "./User.model";
 
 export interface Group extends Document{
     groupName:string,

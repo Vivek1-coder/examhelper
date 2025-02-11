@@ -49,7 +49,7 @@ export async function GET() {
         // Find subjects where the author is one of the group members
         const subjects2 = await SubjectModel.find({ author: { $in: Array.from(memberIds) } });
 
-        console.log("User Subjects:", subjects2);
+        // console.log("User Subjects:", subjects2);
 
         // Merge subjects (avoid duplicates)
         const mergedSubjects = [...subjects, ...subjects2].filter(

@@ -55,12 +55,12 @@ export async function POST(request: Request) {
             }),
             { status: 200 }
         );
-    } catch (error: any) {
+    } catch (error) {
         console.error("Internal server error while creating group", error);
         return new Response(
             JSON.stringify({
                 success: false,
-                message: error.message || "Error while creating new group",
+                message:"Error while creating new group",
             }),
             { status: 500 }
         );

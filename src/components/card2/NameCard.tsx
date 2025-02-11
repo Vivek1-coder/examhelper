@@ -41,6 +41,7 @@ export function NameCard({membername ,admin,onDelete}:cardprops) {
         setIsLoading(false);
     } catch (error) {
         setIsLoading(false);
+        console.error("Error occured while removing",error);
         toast({
             title:"Error",
             description:"Error occured while removing",
@@ -108,7 +109,7 @@ export function NameCard({membername ,admin,onDelete}:cardprops) {
     checkAdmin();
     checkSelf();
     checkAdminName();
-    console.log("admin in front ",admin);
+    // console.log("admin in front ",admin);
   }, [subjectId,membername,AdminName]);
 
   return (

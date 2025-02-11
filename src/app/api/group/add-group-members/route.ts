@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 import GroupModel from "@/model/Group.model";
 import UserModel from "@/model/User.model";
 

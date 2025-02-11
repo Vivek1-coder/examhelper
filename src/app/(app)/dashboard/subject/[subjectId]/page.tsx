@@ -58,7 +58,8 @@ const Page = () => {
         setGroupName(capitalize(response.data.groupName || ""));
       }
     } catch (error) {
-      toast({ title: "Error", description: "Member fetching failed" });
+      console.error("Member fetching failed",error)
+      toast({ title: "Error", description: `Member fetching failed` });
     }
   }, [subjectId, toast]);
 
@@ -73,6 +74,7 @@ const Page = () => {
         setIsGroupCreated(true);
       }
     } catch (error) {
+      console.error("Failed to check group status",error)
       toast({ title: "Error", description: "Failed to check group status" });
     }
   }, [subjectId, toast]);
@@ -88,6 +90,7 @@ const Page = () => {
         setIsPublic(true);
       }
     } catch (error) {
+      
       console.error("Failed to fetch subject status", error);
     }
   }, [subjectId]);
@@ -104,12 +107,12 @@ const Page = () => {
         description: "Group members fetched successfully",
       });
     } catch (error) {
+      console.error("Failed to check group status",error)
       toast({ title: "Error", description: "Error fetching members" });
     }
   };
 
-  // **Refresh Page**
-  const reloadPage = () => router.refresh();
+ 
 
   // **Run API Calls on Component Mount**
   useEffect(() => {

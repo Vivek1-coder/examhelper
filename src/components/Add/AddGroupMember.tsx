@@ -9,13 +9,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
-import { FolderPlus, User, Users } from "lucide-react";
+import {  Users } from "lucide-react";
 import { useParams } from "next/navigation";
 
 const AddGroupMember = ({ onAdd }: { onAdd: () => void }) => {
@@ -37,7 +37,7 @@ const AddGroupMember = ({ onAdd }: { onAdd: () => void }) => {
           `/api/check-username-unique?username=${name}`
         );
         setUsernameMessage(response.data.message);
-        console.log(usernameMessage)
+        // console.log(usernameMessage)
         if(usernameMessage !== 'Username already taken'){
           setUserExist(false);
         }
@@ -130,7 +130,7 @@ const AddGroupMember = ({ onAdd }: { onAdd: () => void }) => {
                 className="col-span-3"
               />
               {
-                !userExist && <p className="text-red-500">"User does not exist"</p>
+                !userExist && <p className="text-red-500">&quot;User does not exist&quot;</p>
               }
             </div>
           </div>
